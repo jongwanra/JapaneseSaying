@@ -17,9 +17,12 @@ import javax.swing.JTextField;
 //import parking.PAMainUI;
 //import parking.PMain;
 //import parking.PMainUI;
-import saying.MainScreen;
+import saying.MainUI;
+
  //login screen
 public class LoginScreen extends JFrame{
+	private MainUI mainUI;
+	private Main main;
 	private JButton btnLogin, btnAdmin;
 	private JButton btnInit;
 	private JTextField userText;
@@ -84,16 +87,7 @@ public class LoginScreen extends JFrame{
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				this.dispose();
-				this.mainScreen = new MainScreen(new MainScreen(0, userText.getText(), phoneText.getText())); // 프레임 오픈
-//				pmain.appMain();
-//				if(rbtn[0].isSelected()) {
-//					isOKCheck();
-//				}
-//				else {
-//					isExitCheck();
-//				}
-				
+				Login();
 			}
 		});
 		//reset
@@ -118,11 +112,11 @@ public class LoginScreen extends JFrame{
 //		});
 	}
 	
-//	public void isOKCheck(){
-//		this.dispose(); // 창닫기
-//		this.pmain = new PMain(new PMainUI(0, userText.getText(), phoneText.getText())); // 프레임 오픈
-//		pmain.appMain();
-//	}
+	public void Login(){
+		this.dispose(); // 창닫기
+		this.main = new Main(new MainUI(userText.getText(), phoneText.getText())); // 프레임 오픈
+		main.appMain();
+	}
 //	public void isExitCheck(){
 //		int result = JOptionPane.showConfirmDialog(null, userText.getText()+" 출차 하시겠습니까?", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 //		if(result == 0) {
