@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
  //login screen
-public class LoginScreen extends JFrame{
+public class OneofSayingUI extends JFrame{
 	private MainUI mainUI;
 	private Main main;
 	private JButton btnLogin, btnAdmin;
@@ -26,7 +26,7 @@ public class LoginScreen extends JFrame{
 	ImageIcon i = new ImageIcon("./src/Image/Background.jpeg");
 	Image im = i.getImage();
 
-	public LoginScreen() {
+	public OneofSayingUI() {
 		
 		//setting
 		setTitle("Japanese Saying");
@@ -39,8 +39,8 @@ public class LoginScreen extends JFrame{
 		MyPanel panel = new MyPanel();
 		placeMainPanel(panel);
 		
-		setSize(400, 600);
 		
+		setSize(400, 600);
 		
 		// visible
 		setVisible(true);
@@ -110,9 +110,6 @@ public class LoginScreen extends JFrame{
 		
 	}
 	public void Login(){
-		this.dispose(); // 창닫기
-		this.main = new Main(new MainUI(id.getText(), pwd.getText())); // 프레임 오픈
-		main.appMain();
 	}
 	
 //	public void isExitCheck(){

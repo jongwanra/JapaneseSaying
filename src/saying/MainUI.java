@@ -1,7 +1,13 @@
 package saying;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,12 +21,15 @@ public class MainUI extends JFrame {
 	protected JScrollPane scrollPane;
 
 	protected JToolBar toolBar = new JToolBar();
-	protected JButton item = new JButton("Item");
+	protected JButton registerOrder = new JButton("Register Order");
+	protected JButton inquiryOrder = new JButton("Inquiry Order");
 	protected String id;
 	protected String pwd;
-
+	ImageIcon i = new ImageIcon("./src/Image/MainBackground.png");
+	Image im = i.getImage();
+	
 	// String id, String pwd
-	public MainUI() {
+	public MainUI(String id, String pwd) {
 		// setting
 		setTitle("Japanese Saying Main Screen");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -28,33 +37,45 @@ public class MainUI extends JFrame {
 		setLocation(600, 350);
 
 		setLayout(new FlowLayout());
+		
+		// Create toolBar
+		toolBar.setBackground(Color.LIGHT_GRAY); //toolBar Background Color
+		toolBar.setFloatable(false); //toolBar fixed
 		add(toolBar);
-		toolBar.add(item);
+		
+		toolBar.add(registerOrder); // register Order(basic)
+		toolBar.add(inquiryOrder); //inquiry Order
 		// panel
 		placeMainPanel();
 		setSize(400, 600);
 		
-		// Create toolBar
-		
 
-//		this.id = id;
-//		this.pwd = pwd;
+		this.id = id;
+		this.pwd = pwd;
 
 		// visible
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+	class MyPanel extends JPanel{
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(im, 0,0, getWidth(),getHeight(),this);
+			
+		}
+		
+	}
 
 	public void placeMainPanel() {
 		
-		JPanel panel = new JPanel();
+		MyPanel panel = new MyPanel();
 		panel.setLayout(new FlowLayout());
 		panel.setPreferredSize(new Dimension(400, 100 * saying_cnt));
 
 		for (int i = 0; i < saying_cnt; i++) {
 			btn[i] = new JButton("" + (i + 1) + "");
-			//btn[i].setBounds(10, (i * 90), 380, 90);
-			btn[i].setPreferredSize(new Dimension(380, 90));
+			btn[i].setPreferredSize(new Dimension(380, 120));
 			panel.add(btn[i]);
 
 		}
@@ -65,5 +86,16 @@ public class MainUI extends JFrame {
 		add(scrollPane);
 
 	}
+	
+	public void addButtonActionListener(ActionListener listener) {
+        // Register Event Listener
+		for(int i=0; i < saying_cnt; i++) {
+			btn[i].addActionListener(listener);
+		}
+//		ok_30.addActionListener(listener);
+//		ok_10.addActionListener(listener);
+//		info.addActionListener(listener);
+//		back.addActionListener(listener);
+    }
 
 }

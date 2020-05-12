@@ -9,7 +9,8 @@ public class Start {
 	MainUI mainUI;
 	public static void main(String[] args) {
 		// 메인클래스 실행
-		Start main = new Start();
-		main.mainUI = new MainUI();
+		Start main = new Start();  
+		main.loginScreen = new LoginScreen();
+		
 	}
 }
