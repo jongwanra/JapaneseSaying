@@ -25,7 +25,7 @@ public class MainUI extends JFrame {
 	protected JButton inquiryOrder = new JButton("Inquiry Order");
 	protected String id;
 	protected String pwd;
-	ImageIcon i = new ImageIcon("./src/Image/MainBackground.png");
+	ImageIcon i = new ImageIcon("./src/Image/Background.jpeg");
 	Image im = i.getImage();
 	
 	// String id, String pwd
@@ -70,18 +70,19 @@ public class MainUI extends JFrame {
 	public void placeMainPanel() {
 		
 		MyPanel panel = new MyPanel();
-		panel.setLayout(new FlowLayout());
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		
 		panel.setPreferredSize(new Dimension(400, 100 * saying_cnt));
 
 		for (int i = 0; i < saying_cnt; i++) {
 			btn[i] = new JButton("" + (i + 1) + "");
-			btn[i].setPreferredSize(new Dimension(380, 120));
+			btn[i].setPreferredSize(new Dimension(371, 120));
 			panel.add(btn[i]);
-
 		}
 
 		scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
 		scrollPane.setPreferredSize(new Dimension(400, 500));
 		add(scrollPane);
 

@@ -20,7 +20,7 @@ public class SayingDAO {
     	try {
     		Class.forName(jdbcDriver); // JDBC 드라이버 로드
     		
-    		conn = DriverManager.getConnection(jdbcUrl, "root", "dreamele19!"); // DB연결
+    		conn = DriverManager.getConnection(jdbcUrl, "madang", "madang"); // DB연결
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
