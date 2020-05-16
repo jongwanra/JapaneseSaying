@@ -6,10 +6,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-//import saying.SignUp;
+import saying.SignUp;
 
 public class SignUpUI extends JFrame {
 	protected SignUp signUp;
@@ -27,14 +23,14 @@ public class SignUpUI extends JFrame {
 	protected JPasswordField txtPassword;
 	protected JPasswordField txtConfirmPassword;
 	protected JTextField txtName;
-	protected JTextField txtEmail;
+	protected JTextField txtPhoneNum;
 	protected JButton btnSave;
 	protected JLabel hRegister;
 	protected JLabel hUsername;
 	protected JLabel hPassword;
 	protected JLabel hConfirmPassword;
 	protected JLabel hName;
-	protected JLabel hEmail;
+	protected JLabel hPhoneNum;
 	protected int saying_cnt = 50;
 
 	ImageIcon i = new ImageIcon("./src/Image/MainBackground.png");
@@ -93,9 +89,9 @@ public class SignUpUI extends JFrame {
 		hName.setBounds(78, 148, 89, 14);
 		panel.add(hName);
 
-		hEmail = new JLabel("Email :");
-		hEmail.setBounds(80, 176, 89, 14);
-		panel.add(hEmail);
+		hPhoneNum = new JLabel("Phone_Number :");
+		hPhoneNum.setBounds(80, 176, 89, 14);
+		panel.add(hPhoneNum);
 
 		// CustomerID
 		txtUsername = new JTextField("");
@@ -116,18 +112,23 @@ public class SignUpUI extends JFrame {
 		txtName.setBounds(217, 140, 176, 20);
 		panel.add(txtName);
 
-		// Email
-		txtEmail = new JTextField("");
-		txtEmail.setBounds(217, 172, 176, 20);
-		panel.add(txtEmail);
+		// Phone Number
+		txtPhoneNum = new JTextField("");
+		txtPhoneNum.setBounds(217, 172, 176, 20);
+		panel.add(txtPhoneNum);
 
 		// Save Button
 		btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Success Data Send");
 				SignUpUI main = new SignUpUI();
-				if (signUp.RegisterData(main))
+				SignUp signUp = new SignUp();
+				if (signUp.RegisterData(main)) {
 					JOptionPane.showMessageDialog(null, "Register Data Successfully");
+					
+				}
+					
 			}
 		});
 		btnSave.setBounds(161, 227, 89, 23);
