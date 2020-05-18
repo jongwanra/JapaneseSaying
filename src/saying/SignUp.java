@@ -5,11 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Logger;
-
-import javax.swing.JOptionPane;
-import saying.SignUpUI;
 
 public class SignUp {
 
@@ -21,139 +16,134 @@ public class SignUp {
 	SignUpUI ui;
 	Connection conn;
 	PreparedStatement pstmt;
-	Statement stmt;
 	ResultSet rs;
+
 	String sql;
-	
+	int userNum;
+	String userName;
+	String password;
+	String phoneNum;
+
 	public SignUp() {
-		
+
 	}
-	
-	//DB connect
+
+	// DB connect
 	public void connectDB() {
 		try {
 			Class.forName(jdbcDriver); // JDBC 드라이버 로드
 			System.out.println("conn exsit!!");
 			conn = DriverManager.getConnection(jdbcUrl, id, pwd); // DB연결
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	//DB close
+	// DB close
 	public void closeDB() {
 		try {
-			pstmt.close();
 			rs.close();
+			pstmt.close();
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public boolean newUser(String UserName, String Password, String PhoneNum) {
+
+	// アイディとパースワード確認
+	public boolean loginCheck(String userName, String password) {
+
+		this.userName = userName;
+		this.password = password;
+
 		connectDB();
-		
-		sql = "INSERT INTO UserInfo " + "(UserID, UserName, PhoneNum) " + "VALUES ('" + UserName + "','" + Password
-				+ "','" + PhoneNum + "'" + ");";
+
+		sql = "select UserId, UserName from UserInfo where UserID = ?";
+		System.out.println(sql);
+
+		try {
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, userName);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				String idd = rs.getString("UserId");
+				String pwdd = rs.getString("UserName");
+
+				if (idd.equals(userName) && pwdd.equals(password)) {
+					System.out.println("Success Login");
+					closeDB();
+					return true;
+				} else {
+					System.out.println("Failed Login");
+					closeDB();
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Failed Login");
+			e.printStackTrace();
+			closeDB();
+			return false;
+		}
+
+		return false;
+	}
+
+	// 최근 등록한 UserId의 총 갯수 
+	public int SelectUserNum() {
+		int result = 0;
+		connectDB();
+
+		sql = "select max(UserNum) from UserInfo";
+		System.out.println(sql);
+
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, UserName);
-			pstmt.setString(2, Password);
-			pstmt.setString(3, PhoneNum);
-    		pstmt.executeUpdate();	// SQL문 전송
-    		return true;
-    		
-    	} catch (Exception e) {
+    		rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result =rs.getInt("max(UserNum)");
+			}
+    		return result;
+		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
 		}
+		return result;
+
+		
 	}
 
-	// SignUp Check Function!
-	public boolean RegisterData(SignUpUI ui) {
-		ui = new SignUpUI();
-		this.ui = ui;
-		System.out.println("Success Data Send2");
-		
-		String UserName = ui.txtUsername.getText();
-		String Password = new String(ui.txtPassword.getPassword());
-		String ConfirmPassword = new String(ui.txtConfirmPassword.getPassword());
-		String Name = ui.txtName.getText();
-		String PhoneNum = ui.txtPhoneNum.getText();
-		boolean status = false;
-		
-		
-		System.out.println("!!!!!" + UserName);
-		System.out.println("!!!!!" + Password);
-		System.out.println("!!!!!" + Name);
+	public boolean newUser(String userName, String password, String phoneNum) {
 
-		// Username
-		if (UserName.equals("")) {
-			JOptionPane.showMessageDialog(null, "Please Input (Username)");
-			ui.txtUsername.requestFocusInWindow();
-			return false;
-		}
-		// Password
-		if (Password.equals("")) {
-			JOptionPane.showMessageDialog(null, "Please Input (Password)");
-			ui.txtPassword.requestFocusInWindow();
-			return false;
-		}
-		// Confirm Password
-		if (ConfirmPassword.equals("")) {
-			JOptionPane.showMessageDialog(null, "Please Input (Confirm Password)");
-			ui.txtConfirmPassword.requestFocusInWindow();
-			return false;
-		}
-		// Password math
-		if (!Password.equals(ConfirmPassword)) {
-			JOptionPane.showMessageDialog(null, "Please Input (Password Not Match!)");
-			ui.txtPassword.requestFocusInWindow();
-			return false;
-		}
-		// Name
-		if (Name.equals("")) {
-			JOptionPane.showMessageDialog(null, "Please Input (Name)");
-			ui.txtName.requestFocusInWindow();
-			return false;
-		}
-		// Phone Number
-		if (PhoneNum.equals("")) {
-			JOptionPane.showMessageDialog(null, "Please Input (PhoneNumber)");
-			ui.hPhoneNum.requestFocusInWindow();
-			return false;
-		}
+		this.userNum = SelectUserNum() + 1;
+		this.userName = userName;
+		this.password = password;
+		this.phoneNum = phoneNum;
+
+		connectDB();
+
+		sql = "insert into UserInfo (UserNum, UserID, UserName, PhoneNum) values (?, ?, ?, ?)";
+		System.out.println(sql);
 
 		try {
-			
-		
-		//Register User
-		
-		status = newUser( UserName, Password, PhoneNum);		
-		stmt.execute(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNum);
+			pstmt.setString(2, userName);
+			pstmt.setString(3, password);
+			pstmt.setString(4, phoneNum);
+			pstmt.executeUpdate(); // SQL문 전송
 
-			// Reset Text Fields
-			ui.txtUsername.setText("");
-			ui.txtPassword.setText("");
-			ui.txtConfirmPassword.setText("");
-			ui.txtName.setText("");
-			ui.txtPhoneNum.setText("");
-
-			status = true;
+			return true;
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(null, e.getMessage());
 			e.printStackTrace();
+			return false;
 		}
 
-		closeDB();
-		return status;
-		
 	}
-	
+
 	public static void main(String[] args) {
 
 	}

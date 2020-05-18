@@ -32,6 +32,7 @@ public class SignUpUI extends JFrame {
 	protected JLabel hName;
 	protected JLabel hPhoneNum;
 	protected int saying_cnt = 50;
+	protected int userNum = 0;
 
 	ImageIcon i = new ImageIcon("./src/Image/MainBackground.png");
 	Image im = i.getImage();
@@ -122,16 +123,85 @@ public class SignUpUI extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Success Data Send");
-				SignUpUI main = new SignUpUI();
-				SignUp signUp = new SignUp();
-				if (signUp.RegisterData(main)) {
+				if (RegisterData()) {
 					JOptionPane.showMessageDialog(null, "Register Data Successfully");
-					
+
 				}
-					
+
 			}
 		});
 		btnSave.setBounds(161, 227, 89, 23);
 		panel.add(btnSave);
+	}
+
+	// SignUp Check Function!
+	public boolean RegisterData() {
+		String userName = txtUsername.getText();
+		String password = new String(txtPassword.getPassword());
+		String confirmPassword = new String(txtConfirmPassword.getPassword());
+		String name = txtName.getText();
+		String phoneNum = txtPhoneNum.getText();
+		boolean status = false;
+
+		// Username
+		if (userName.equals("")) {
+			JOptionPane.showMessageDialog(null, "Please Input (Username)");
+			txtUsername.requestFocusInWindow();
+			return false;
+		}
+		// Password
+		if (password.equals("")) {
+			JOptionPane.showMessageDialog(null, "Please Input (Password)");
+			txtPassword.requestFocusInWindow();
+			return false;
+		}
+		// Confirm Password
+		if (confirmPassword.equals("")) {
+			JOptionPane.showMessageDialog(null, "Please Input (Confirm Password)");
+			txtConfirmPassword.requestFocusInWindow();
+			return false;
+		}
+		// Password math
+		if (!password.equals(confirmPassword)) {
+			JOptionPane.showMessageDialog(null, "Please Input (Password Not Match!)");
+			txtPassword.requestFocusInWindow();
+			return false;
+		}
+		// Name
+		if (name.equals("")) {
+			JOptionPane.showMessageDialog(null, "Please Input (Name)");
+			txtName.requestFocusInWindow();
+			return false;
+		}
+		// Phone Number
+		if (phoneNum.equals("")) {
+			JOptionPane.showMessageDialog(null, "Please Input (PhoneNumber)");
+			hPhoneNum.requestFocusInWindow();
+			return false;
+		}
+
+		try {
+
+			signUp = new SignUp();
+			if (signUp.newUser(userName, password, phoneNum))
+				System.out.println("Register Success");
+			else
+				System.out.println("Register fail!");
+			
+			// Reset Text Fields
+			txtUsername.setText("");
+			txtPassword.setText("");
+			txtConfirmPassword.setText("");
+			txtName.setText("");
+			txtPhoneNum.setText("");
+
+			status = true;
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+		return status;
+
 	}
 }
