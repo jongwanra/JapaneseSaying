@@ -28,7 +28,7 @@ public class MainUI extends JFrame {
 	ImageIcon i = new ImageIcon("./src/Image/Background.jpeg");
 	Image im = i.getImage();
 	
-	// String id, String pwd
+
 	public MainUI(String id, String pwd) {
 		// setting
 		setTitle("Japanese Saying Main Screen");
@@ -52,6 +52,8 @@ public class MainUI extends JFrame {
 
 		this.id = id;
 		this.pwd = pwd;
+		System.out.println(id);
+		System.out.println(pwd);
 
 		// visible
 		setVisible(true);
@@ -93,10 +95,6 @@ public class MainUI extends JFrame {
 		for(int i=0; i < saying_cnt; i++) {
 			btn[i].addActionListener(listener);
 		}
-//		ok_30.addActionListener(listener);
-//		ok_10.addActionListener(listener);
-//		info.addActionListener(listener);
-//		back.addActionListener(listener);
     }
 
 }

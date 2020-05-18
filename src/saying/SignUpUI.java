@@ -16,15 +16,18 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import saying.SignUp;
+import saying.LoginScreen;
 
 public class SignUpUI extends JFrame {
 	protected SignUp signUp;
+	protected LoginScreen loginScreen;
 	protected JTextField txtUsername;
 	protected JPasswordField txtPassword;
 	protected JPasswordField txtConfirmPassword;
 	protected JTextField txtName;
 	protected JTextField txtPhoneNum;
 	protected JButton btnSave;
+	protected JButton btnBack;
 	protected JLabel hRegister;
 	protected JLabel hUsername;
 	protected JLabel hPassword;
@@ -34,7 +37,7 @@ public class SignUpUI extends JFrame {
 	protected int saying_cnt = 50;
 	protected int userNum = 0;
 
-	ImageIcon i = new ImageIcon("./src/Image/MainBackground.png");
+	ImageIcon i = new ImageIcon("./src/Image/Background.jpeg");
 	Image im = i.getImage();
 
 	public SignUpUI() {
@@ -123,15 +126,27 @@ public class SignUpUI extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Success Data Send");
-				if (RegisterData()) {
+				if (RegisterData())
 					JOptionPane.showMessageDialog(null, "Register Data Successfully");
-
-				}
-
 			}
 		});
-		btnSave.setBounds(161, 227, 89, 23);
+		
+		btnSave.setBounds(140, 227, 89, 23);
 		panel.add(btnSave);
+		
+		btnBack = new JButton("back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					back();
+				}
+		});
+		btnBack.setBounds(220, 227, 89, 23);
+		panel.add(btnBack);
+	}
+	
+	public void back() {
+			this.dispose(); // 창닫기
+			this.loginScreen = new LoginScreen();
 	}
 
 	// SignUp Check Function!

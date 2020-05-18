@@ -24,6 +24,7 @@ public class SignUp {
 	String password;
 	String phoneNum;
 
+	
 	public SignUp() {
 
 	}
@@ -134,7 +135,6 @@ public class SignUp {
 			pstmt.setString(3, password);
 			pstmt.setString(4, phoneNum);
 			pstmt.executeUpdate(); // SQL문 전송
-
 			return true;
 
 		} catch (Exception e) {

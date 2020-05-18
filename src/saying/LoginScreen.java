@@ -97,7 +97,6 @@ public class LoginScreen extends JFrame {
 		});
 		// reset
 		btnInit = new JButton("Reset");
-//		btnInit.setBounds(180, 170, 100, 30);
 		input.add(btnInit);
 		btnInit.addActionListener(new ActionListener() {
 			@Override
@@ -107,7 +106,6 @@ public class LoginScreen extends JFrame {
 			}
 		});
 		btnSingUp = new JButton("등록");
-//		btnSingUp.setBounds(200, 200, 80, 20);
 		input.add(btnSingUp);
 		btnSingUp.addActionListener(new ActionListener() {
 			@Override
@@ -130,6 +128,7 @@ public class LoginScreen extends JFrame {
 			this.dispose(); // 창닫기
 			this.main = new Main(new MainUI(userName.getText(), password.getText())); // 프레임 오픈
 			main.appMain();
+			
 		} else {
 			JOptionPane.showMessageDialog(null, "Faild");
 		}
@@ -141,20 +140,7 @@ public class LoginScreen extends JFrame {
 		this.signUpScreen = new SignUpUI();
 	}
 
-//	public void isAdminCheck(){
-//		String name = JOptionPane.showInputDialog("Admin Password");
-//		if(name != null) {
-//      		if(name.equals("admin")) {
-//      			JOptionPane.showMessageDialog(null, "Success");
-//      			this.dispose(); // 창닫기
-//      			this.pamain = new PAMain(new PAMainUI());
-//      			pamain.appMain();
-//      		}
-//      		else {
-//      			JOptionPane.showMessageDialog(null, "Faild");
-//      		}
-//		}
-//	}
+
 	public static void main(String[] args) {
 
 	}
