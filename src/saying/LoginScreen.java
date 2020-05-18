@@ -30,7 +30,7 @@ public class LoginScreen extends JFrame {
 	JTextField password;
 	ImageIcon i = new ImageIcon("./src/Image/Background.jpeg");
 	Image im = i.getImage();
-	SignUp signUp;
+	SayingDAO dao;
 
 	public LoginScreen() {
 
@@ -120,11 +120,11 @@ public class LoginScreen extends JFrame {
 	}
 
 	public void Login() {
-		signUp = new SignUp();
+		dao = new SayingDAO();
 		String getUserName = userName.getText();
 		String getPassword = new String(password.getText());
 		
-		if (signUp.loginCheck(getUserName, getPassword)) {
+		if (dao.loginCheck(getUserName, getPassword)) {
 			this.dispose(); // 창닫기
 			this.main = new Main(new MainUI(userName.getText(), password.getText())); // 프레임 오픈
 			main.appMain();

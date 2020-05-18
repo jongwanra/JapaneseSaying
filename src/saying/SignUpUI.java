@@ -19,7 +19,7 @@ import saying.SignUp;
 import saying.LoginScreen;
 
 public class SignUpUI extends JFrame {
-	protected SignUp signUp;
+	protected SayingDAO dao;
 	protected LoginScreen loginScreen;
 	protected JTextField txtUsername;
 	protected JPasswordField txtPassword;
@@ -56,6 +56,7 @@ public class SignUpUI extends JFrame {
 		// visible
 		setVisible(true);
 	}
+	
 
 	class MyPanel extends JPanel {
 		public void paintComponent(Graphics g) {
@@ -197,8 +198,8 @@ public class SignUpUI extends JFrame {
 
 		try {
 
-			signUp = new SignUp();
-			if (signUp.newUser(userName, password, phoneNum))
+			dao = new SayingDAO();
+			if (dao.newUser(userName, password, phoneNum))
 				System.out.println("Register Success");
 			else
 				System.out.println("Register fail!");

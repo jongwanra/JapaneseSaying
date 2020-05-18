@@ -16,6 +16,7 @@ import javax.swing.JToolBar;
 
 public class MainUI extends JFrame {
 	protected int saying_cnt = 50;
+	private SayingDAO dao;
 	private LoginScreen loginscreen;
 	protected JButton[] btn = new JButton[saying_cnt];
 	protected JScrollPane scrollPane;
@@ -25,6 +26,7 @@ public class MainUI extends JFrame {
 	protected JButton inquiryOrder = new JButton("Inquiry Order");
 	protected String id;
 	protected String pwd;
+	protected String[] datas;
 	ImageIcon i = new ImageIcon("./src/Image/Background.jpeg");
 	Image im = i.getImage();
 	
@@ -76,8 +78,16 @@ public class MainUI extends JFrame {
 		
 		panel.setPreferredSize(new Dimension(400, 100 * saying_cnt));
 
+		
+		//get Data in Dao
+			dao = new SayingDAO();
+			datas = new String[50];
+			datas = dao.getSaying();
+		
+		//
 		for (int i = 0; i < saying_cnt; i++) {
-			btn[i] = new JButton("" + (i + 1) + "");
+			
+			btn[i] = new JButton(datas[i]);
 			btn[i].setPreferredSize(new Dimension(371, 120));
 			panel.add(btn[i]);
 		}
