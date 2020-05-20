@@ -27,34 +27,30 @@ public class LoginScreen extends JFrame {
 	AdminUI adminUI;
 	Main main;
 	SignUpUI signUpScreen;
-	JButton btnLogin, btnSingUp;
+	JButton btnLogin, btnSignUp;
 	JButton btnInit;	
 	JLabel imgBox;
 	
 	JTextField userName;
 	JTextField password;
-	ImageIcon i = new ImageIcon("./src/Image/Background.jpeg");
+	ImageIcon i = new ImageIcon("./src/Image/LoginScreenLogo.png");
 	Image im = i.getImage();
 	
 	//Changing Icon Size
-	ImageIcon idIcon = new ImageIcon("./src/Image/LoginID.png");
-	Image idImg = idIcon.getImage();
-	Image changedIdImg = idImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-	ImageIcon newIdIcon = new ImageIcon(changedIdImg);
-	
-	ImageIcon pwdIcon = new ImageIcon("./src/Image/LoginPWD.png");
-	Image pwdImg = pwdIcon.getImage();
-	Image changedPwdImg = pwdImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-	ImageIcon newPwdIcon = new ImageIcon(changedPwdImg);
+//	ImageIcon idIcon = new ImageIcon("./src/Image/LoginID.png");
+//	Image idImg = idIcon.getImage();
+//	Image changedIdImg = idImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+//	ImageIcon newIdIcon = new ImageIcon(changedIdImg);
+//	
+//	ImageIcon pwdIcon = new ImageIcon("./src/Image/LoginPWD.png");
+//	Image pwdImg = pwdIcon.getImage();
+//	Image changedPwdImg = pwdImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+//	ImageIcon newPwdIcon = new ImageIcon(changedPwdImg);
 
 	Font font;
-	
-	
-	
 	SayingDAO dao;
 
 	public LoginScreen() {
-
 		// setting
 		setTitle("Japanese Saying");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -63,7 +59,7 @@ public class LoginScreen extends JFrame {
 		setLocation(600, 350);
 
 		//MyPanel panel = new MyPanel();
-		JPanel panel = new JPanel();
+		MyPanel panel = new MyPanel();
 		placeMainPanel(panel);
 
 		// add(panel);
@@ -88,7 +84,7 @@ public class LoginScreen extends JFrame {
 		super.paint(g);
 		
 		g.drawLine(58, 345, 340, 345);
-		g.drawLine(58, 380, 340, 380 );
+		g.drawLine(58, 383, 340, 383 );
 		
 	}
 
@@ -102,14 +98,14 @@ public class LoginScreen extends JFrame {
 		JPanel input2 = new JPanel();
 		
 		Color color1 = new Color(119, 135, 194, 80);
-		Color color2 = new Color(255, 255, 255);
+		Color color2 = new Color(250, 250, 249);
 		
-		panel.setBackground(color2);
+		//panel.setBackground(color2);
 
 		input.setBackground(color2);
 		input.setBorder(new TitledBorder(new LineBorder(color2, 5, false)));
-		input.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-		input.setBounds(50, 280, 300, 100);
+		input.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 15));
+		input.setBounds(45, 280, 310, 100);
 		
 		input2.setBackground(color2);
 		input2.setBorder(new TitledBorder(new LineBorder(color2, 5, false)));
@@ -120,17 +116,22 @@ public class LoginScreen extends JFrame {
 		panel.add(input2);
 		panel.add(input);
 
-		//font = new Font("궁서", Font.BOLD, 20);
+		font = new Font("휴먼고딕", Font.PLAIN, 12);
 		
-		JLabel userLabel = new JLabel(newIdIcon);
+		
+		//JLabel userLabel = new JLabel(newIdIcon);
+		JLabel userLabel = new JLabel("ID :");
+		userLabel.setFont(font);
 		input.add(userLabel);
 
-		userName = new JTextField("", 20);
-		//userName.setFont(font);
+		userName = new JTextField("", 23);
+		userName.setFont(font);
 		userName.setBorder(null);
 		input.add(userName);
 
-		JLabel passLabel = new JLabel(newPwdIcon);
+		//JLabel passLabel = new JLabel(newPwdIcon);
+		JLabel passLabel = new JLabel("PW :");
+		passLabel.setFont(font);
 		input.add(passLabel);
 
 		password = new JPasswordField("", 13);
@@ -139,7 +140,7 @@ public class LoginScreen extends JFrame {
 		
 		// reset
 				btnInit = new JButton("Reset");
-				btnInit.setPreferredSize(new Dimension(78, 30));
+				btnInit.setPreferredSize(new Dimension(80, 25));
 				btnInit.setBackground(Color.black);
 				btnInit.setBorderPainted(false);
 				btnInit.setContentAreaFilled(false);
@@ -160,6 +161,7 @@ public class LoginScreen extends JFrame {
 		btnLogin.setOpaque(true);
 		btnLogin.setBackground(Color.BLACK);
 		btnLogin.setForeground(Color.WHITE);
+		btnLogin.setFont(font);
 		input2.add(btnLogin);
 		
 		btnLogin.addActionListener(new ActionListener() {
@@ -169,13 +171,14 @@ public class LoginScreen extends JFrame {
 			}
 		});
 		
-		btnSingUp = new JButton("Create Account");
-		btnSingUp.setPreferredSize(new Dimension(310, 50));
-		//btnSingUp.setBackground(Color.BLACK);
-		btnSingUp.setBorderPainted(false);
-		//btnSingUp.setContentAreaFilled(false);
-		input2.add(btnSingUp);
-		btnSingUp.addActionListener(new ActionListener() {
+		btnSignUp = new JButton("Create Account");
+		btnSignUp.setPreferredSize(new Dimension(310, 50));
+		btnSignUp.setFont(font);
+		//btnSignUp.setBackground(Color.BLACK);
+		btnSignUp.setBorderPainted(false);
+		//btnSignUp.setContentAreaFilled(false);
+		input2.add(btnSignUp);
+		btnSignUp.addActionListener(new ActionListener() {
 			@Override
 			// into SignUpScreen
 			public void actionPerformed(ActionEvent e) {

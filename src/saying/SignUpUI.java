@@ -2,6 +2,7 @@ package saying;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -16,6 +17,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+
 import saying.SignUp;
 import saying.LoginScreen;
 
@@ -37,8 +41,9 @@ public class SignUpUI extends JFrame {
 	protected JLabel hPhoneNum;
 	protected int saying_cnt = 50;
 	protected int userNum = 0;
+	protected Font font;
 
-	ImageIcon i = new ImageIcon("./src/Image/Background.jpeg");
+	ImageIcon i = new ImageIcon("./src/Image/SignUpLogo.png");
 	Image im = i.getImage();
 
 	public SignUpUI() {
@@ -57,7 +62,6 @@ public class SignUpUI extends JFrame {
 		// visible
 		setVisible(true);
 	}
-	
 
 	class MyPanel extends JPanel {
 		public void paintComponent(Graphics g) {
@@ -67,64 +71,98 @@ public class SignUpUI extends JFrame {
 		}
 	}
 
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		super.paint(g);
+
+		for (int i = 0; i < 5; i++)
+			g.drawLine(40, 242 + (i * 45), 360, 242 + (i * 45));
+
+	}
+
 	public void placeMainPanel(MyPanel panel) {
 		panel.setLayout(null);
 		panel.setPreferredSize(new Dimension(400, 600));
-		add(panel);
 
-		// Header Title
-		hRegister = new JLabel("Register Data");
-		hRegister.setFont(new Font("Tahoma", Font.BOLD, 13));
-		hRegister.setBounds(121, 11, 132, 20);
-		panel.add(hRegister);
+		JPanel textPanel = new JPanel();
+		JPanel btnPanel = new JPanel();
 
-		// *** Header ***//
-		hUsername = new JLabel("Username :");
-		hUsername.setBounds(78, 52, 89, 14);
-		panel.add(hUsername);
+		Color bkgColor = new Color(255, 255, 255);
+		font = new Font("휴먼고딕", Font.PLAIN, 12);
 
-		hPassword = new JLabel("Password :");
-		hPassword.setBounds(78, 84, 89, 14);
-		panel.add(hPassword);
+		textPanel.setBackground(bkgColor);
+		textPanel.setBorder(new TitledBorder(new LineBorder(bkgColor, 5, false)));
+		textPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 30));
+		textPanel.setBounds(40, 165, 320, 260);
 
-		hConfirmPassword = new JLabel("Confirm Password :");
-		hConfirmPassword.setBounds(77, 113, 130, 14);
-		panel.add(hConfirmPassword);
+		btnPanel.setBackground(bkgColor);
+		btnPanel.setBorder(new TitledBorder(new LineBorder(bkgColor, 5, false)));
+		btnPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 40, 10));
+		btnPanel.setBounds(0, 425, 400, 135);
 
-		hName = new JLabel("Name :");
-		hName.setBounds(78, 148, 89, 14);
-		panel.add(hName);
+		panel.add(textPanel);
+		panel.add(btnPanel);
 
-		hPhoneNum = new JLabel("Phone_Number :");
-		hPhoneNum.setBounds(80, 176, 89, 14);
-		panel.add(hPhoneNum);
+		hUsername = new JLabel("Username");
+		hUsername.setFont(font);
+		textPanel.add(hUsername);
 
 		// CustomerID
-		txtUsername = new JTextField("");
-		txtUsername.setBounds(217, 47, 99, 20);
-		panel.add(txtUsername);
+		txtUsername = new JTextField("", 18);
+		txtUsername.setFont(font);
+		txtUsername.setBorder(null);
+		textPanel.add(txtUsername);
+
+		hPassword = new JLabel("Password");
+		hPassword.setFont(font);
+		textPanel.add(hPassword);
+
 		// Password
-		txtPassword = new JPasswordField();
-		txtPassword.setBounds(217, 77, 102, 20);
-		panel.add(txtPassword);
+		txtPassword = new JPasswordField("", 18);
+		txtPassword.setFont(font);
+		txtPassword.setBorder(null);
+		textPanel.add(txtPassword);
+
+		hConfirmPassword = new JLabel("Confirm Password");
+		hConfirmPassword.setFont(font);
+		textPanel.add(hConfirmPassword);
 
 		// Confirm Password
-		txtConfirmPassword = new JPasswordField();
-		txtConfirmPassword.setBounds(217, 112, 102, 20);
-		panel.add(txtConfirmPassword);
+		txtConfirmPassword = new JPasswordField("", 14);
+		txtConfirmPassword.setFont(font);
+		txtConfirmPassword.setBorder(null);
+		textPanel.add(txtConfirmPassword);
+
+		hName = new JLabel("Name");
+		hName.setFont(font);
+		textPanel.add(hName);
 
 		// Name
-		txtName = new JTextField("");
-		txtName.setBounds(217, 140, 176, 20);
-		panel.add(txtName);
+		txtName = new JTextField("", 20);
+		txtName.setFont(font);
+		txtName.setBorder(null);
+		textPanel.add(txtName);
+
+		hPhoneNum = new JLabel("Phone Number");
+		hPhoneNum.setFont(font);
+		textPanel.add(hPhoneNum);
 
 		// Phone Number
-		txtPhoneNum = new JTextField("");
-		txtPhoneNum.setBounds(217, 172, 176, 20);
-		panel.add(txtPhoneNum);
+		txtPhoneNum = new JTextField("", 10);
+		txtPhoneNum.setFont(font);
+		txtPhoneNum.setBorder(null);
+		textPanel.add(txtPhoneNum);
 
 		// Save Button
 		btnSave = new JButton("Save");
+		btnSave.setPreferredSize(new Dimension(320, 50));
+		btnSave.setBorderPainted(false);
+//		btnSave.setContentAreaFilled(false);
+		btnSave.setOpaque(true);
+		btnSave.setBackground(Color.BLACK);
+		btnSave.setForeground(Color.WHITE);
+		btnSave.setFont(font);
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Success Data Send");
@@ -132,24 +170,30 @@ public class SignUpUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "Register Data Successfully");
 			}
 		});
-		
-		btnSave.setBounds(140, 227, 89, 23);
+
 		btnSave.setBackground(Color.BLACK);
-		panel.add(btnSave);
-		
+		btnPanel.add(btnSave);
+
+		// Back Button
 		btnBack = new JButton("back");
+		btnBack.setPreferredSize(new Dimension(320, 50));
+		btnBack.setFont(font);
+		// btnBack.setBackground(Color.BLACK);
+		btnBack.setBorderPainted(false);
+		// btnBack.setContentAreaFilled(false);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					back();
-				}
+				back();
+			}
 		});
-		btnBack.setBounds(220, 227, 89, 23);
-		panel.add(btnBack);
+
+		btnPanel.add(btnBack);
+		add(panel);
 	}
-	
+
 	public void back() {
-			this.dispose(); // 창닫기
-			this.loginScreen = new LoginScreen();
+		this.dispose(); // 창닫기
+		this.loginScreen = new LoginScreen();
 	}
 
 	// SignUp Check Function!
@@ -205,7 +249,7 @@ public class SignUpUI extends JFrame {
 				System.out.println("Register Success");
 			else
 				System.out.println("Register fail!");
-			
+
 			// Reset Text Fields
 			txtUsername.setText("");
 			txtPassword.setText("");

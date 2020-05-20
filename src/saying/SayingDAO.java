@@ -58,12 +58,21 @@ public class SayingDAO {
 		this.flag = flag;
 		connectDB();
 
-		if(flag == 0)
+		if(flag == 0) {
+			System.out.println("register Order get OneofSaying");
 			sql = "select Saying, Korean from SayingInfo where SayingNum = ?";
-		else if(flag == 1)
+		}
+			
+		else if(flag == 1) {
+			System.out.println("inquiry Order get OneofSaying");
+			sql = "select Saying, Korean from SayingInfo order by SayingNum desc";
+		}
+			
+		else if(flag == 2){
+			System.out.println("userRanking Order get OneofSaying");
 			sql = "";
-		else if(flag == 2)
-			sql = "";
+		}
+			
 		
 		System.out.println(sql);
 		

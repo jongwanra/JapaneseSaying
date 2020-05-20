@@ -23,6 +23,7 @@ public class Main {
 	private int index;
 	private String[] datas;
 	private int saying_cnt;
+	private int flag;
 
 	Logger logger;
 	boolean status;
@@ -43,38 +44,44 @@ public class Main {
 		mainUI.addButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				flag = 0;
 				Object obj = e.getSource();
+				
+				 if (obj == mainUI.registerOrder) {
+					System.out.println("registerOrder!!");
+					registerOrder(mainUI.id, mainUI.pwd, index);
+					flag = 0;
+				}else if (obj == mainUI.inquiryOrder) {
+					System.out.println("inquiryOrder!!");
+					inquiryOrder(mainUI.id, mainUI.pwd);
+					flag = 1;
+				}else if (obj == mainUI.userRankingOrder) {
+					System.out.println("user Ranking Order!!");
+					userRankingOrder(mainUI.id, mainUI.pwd);
+					flag = 2;
+				}
 				for (int i = 0; i < mainUI.saying_cnt; i++) {
 					if (obj == mainUI.btn[i]) {
 						System.out.println("EnterSaying!!");
-						EnterSaying(mainUI.id, mainUI.pwd, i);
+						EnterSaying(mainUI.id, mainUI.pwd, i, flag);
 					}
 				}
-				if (obj == mainUI.inquiryOrder) {
-					System.out.println("inquiryOrder!!");
-					inquiryOrder(mainUI.id, mainUI.pwd);
-				} else if (obj == mainUI.registerOrder) {
-					System.out.println("registerOrder!!");
-					registerOrder(mainUI.id, mainUI.pwd, mainUI.saying_cnt);
-				} else if (obj == mainUI.userRankingOrder) {
-					System.out.println("user Ranking Order!!");
-					userRankingOrder(mainUI.id, mainUI.pwd);
-
-				}
+				
 			}
 
 		});
 
 	}
 
-	public void EnterSaying(String id, String pwd, int index) {
+	public void EnterSaying(String id, String pwd, int index, int flag) {
 
 		this.id = id;
 		this.pwd = pwd;
 		this.index = index;
+		this.flag = flag;
 
 		dao = new SayingDAO();
-		datas = dao.getOneofSaying(index);
+		datas = dao.getOneofSaying(index, flag);
 
 		mainUI.dispose(); // close
 		this.oneofSayingUI = new OneofSayingUI(id, pwd, datas); // 프레임 오픈
