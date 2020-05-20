@@ -1,0 +1,52 @@
+Data Base
+
+//User Information
+create table UserInfo(
+UserNum int(11) not null auto_increment,
+UserID varchar(15) not null,
+UserPwd varchar(15) not null,
+UserName varchar(15) not null,
+PhoneNum varchar(15) not null,
+primary key(UserNum)
+)auto_increment = 1;
+
+//Saying Information
+create table SayingInfo(
+SayingNum int(11) not null auto_increment,
+Saying varchar(100) not null,
+Korean varchar(100) not null,
+SayingCnt int(11) not null,
+primary key(SayingNum)
+)auto_increment = 1;
+
+
+create table SayingCnt(
+UserInfo_UserNum int(11) not null,
+SayingInfo_SayingNum int(11) not null,
+SayingInfo_SayingCnt int(11) not null,
+FOREIGN KEY(UserInfo_UserNum) REFERENCES UserInfo (UserNum),
+FOREIGN KEY(SayingInfo_SayingNum)REFERENCES SayingInfo (SayingNum),
+FOREIGN KEY(SayingInfo_SayingCnt) REFERENCES SayingInfo (SayingCnt)
+);
+
+create table SayingRanking(
+SayingRanking int(11) not null auto_increment,
+SayingCnt int(11) not null,
+SayingNum int(11) not null,
+Saying varchar(100) not null,
+primary key(SayingRanking),
+FOREIGN KEY SayingCnt REFERENCES SayingInfo (SayingCnt),
+FOREIGN KEY SayingNum REFERENCES SayingInfo (SayingNum),
+FOREIGN KEY Saying REFERENCES SayingInfo (Saying)
+)auto_increment = 1;
+
+
+create table UserRanking(
+UserRanking int(11) not null auto_increment,
+UserCnt int(11) not null,
+UserNum int(11) not null,
+UserName varchar(15) not null,
+primary key(UserRanking),
+FOREIGN KEY UserNum REFERENCES UserInfo (UserNum),
+FOREIGN KEY UserName REFERENCES UserInfo (Username)
+)auto_increment = 1;
