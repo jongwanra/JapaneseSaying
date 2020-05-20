@@ -3,10 +3,12 @@ package saying;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,21 +17,40 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 //login screen
 public class LoginScreen extends JFrame {
 	MainUI mainUI;
+	AdminUI adminUI;
 	Main main;
 	SignUpUI signUpScreen;
 	JButton btnLogin, btnSingUp;
-	JButton btnInit;
-
+	JButton btnInit;	
+	JLabel imgBox;
+	
 	JTextField userName;
 	JTextField password;
 	ImageIcon i = new ImageIcon("./src/Image/Background.jpeg");
 	Image im = i.getImage();
+	
+	//Changing Icon Size
+	ImageIcon idIcon = new ImageIcon("./src/Image/LoginID.png");
+	Image idImg = idIcon.getImage();
+	Image changedIdImg = idImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+	ImageIcon newIdIcon = new ImageIcon(changedIdImg);
+	
+	ImageIcon pwdIcon = new ImageIcon("./src/Image/LoginPWD.png");
+	Image pwdImg = pwdIcon.getImage();
+	Image changedPwdImg = pwdImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+	ImageIcon newPwdIcon = new ImageIcon(changedPwdImg);
+
+	Font font;
+	
+	
+	
 	SayingDAO dao;
 
 	public LoginScreen() {
@@ -41,7 +62,8 @@ public class LoginScreen extends JFrame {
 		setResizable(false);
 		setLocation(600, 350);
 
-		MyPanel panel = new MyPanel();
+		//MyPanel panel = new MyPanel();
+		JPanel panel = new JPanel();
 		placeMainPanel(panel);
 
 		// add(panel);
@@ -55,58 +77,104 @@ public class LoginScreen extends JFrame {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			g.drawImage(im, 0, 0, getWidth(), getHeight(), this);
+			
 		}
 
 	}
+	
+	@Override
+	public void paint(Graphics g){
+		//TODO Auto-generated method stub
+		super.paint(g);
+		
+		g.drawLine(58, 345, 340, 345);
+		g.drawLine(58, 380, 340, 380 );
+		
+	}
 
-	public void placeMainPanel(MyPanel panel) {
+	public void placeMainPanel(JPanel panel) {
+		
 		panel.setLayout(null);
 		panel.setPreferredSize(new Dimension(400, 600));
 
+		
 		JPanel input = new JPanel();
+		JPanel input2 = new JPanel();
+		
 		Color color1 = new Color(119, 135, 194, 80);
 		Color color2 = new Color(255, 255, 255);
+		
+		panel.setBackground(color2);
 
 		input.setBackground(color2);
-		input.setBorder(new TitledBorder(new LineBorder(color1, 5, true)));
+		input.setBorder(new TitledBorder(new LineBorder(color2, 5, false)));
 		input.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+		input.setBounds(50, 280, 300, 100);
+		
+		input2.setBackground(color2);
+		input2.setBorder(new TitledBorder(new LineBorder(color2, 5, false)));
+		input2.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
+		input2.setBounds(40, 370, 320, 150);
+		
 
-		input.setBounds(50, 180, 300, 240);
-
+		panel.add(input2);
 		panel.add(input);
 
-		JLabel userLabel = new JLabel("ID :");
+		//font = new Font("궁서", Font.BOLD, 20);
+		
+		JLabel userLabel = new JLabel(newIdIcon);
 		input.add(userLabel);
 
-		userName = new JTextField("ID를 입력해주세요.", 20);
+		userName = new JTextField("", 20);
+		//userName.setFont(font);
+		userName.setBorder(null);
 		input.add(userName);
 
-		JLabel passLabel = new JLabel("PW:");
+		JLabel passLabel = new JLabel(newPwdIcon);
 		input.add(passLabel);
 
-		password = new JPasswordField("비밀번호를 입력해 주세요.", 20);
+		password = new JPasswordField("", 13);
+		password.setBorder(null);
 		input.add(password);
+		
+		// reset
+				btnInit = new JButton("Reset");
+				btnInit.setPreferredSize(new Dimension(78, 30));
+				btnInit.setBackground(Color.black);
+				btnInit.setBorderPainted(false);
+				btnInit.setContentAreaFilled(false);
+				
+				input.add(btnInit);
+				btnInit.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						userName.setText("");
+						password.setText("");
+					}
+				});
 
 		btnLogin = new JButton("Login");
-		input.add(btnLogin);
+		btnLogin.setPreferredSize(new Dimension(310, 50));
+		btnLogin.setBorderPainted(false);
+//		btnLogin.setContentAreaFilled(false);
+		btnLogin.setOpaque(true);
+		btnLogin.setBackground(Color.BLACK);
+		btnLogin.setForeground(Color.WHITE);
+		input2.add(btnLogin);
+		
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Login();
 			}
 		});
-		// reset
-		btnInit = new JButton("Reset");
-		input.add(btnInit);
-		btnInit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				userName.setText("");
-				password.setText("");
-			}
-		});
-		btnSingUp = new JButton("등록");
-		input.add(btnSingUp);
+		
+		btnSingUp = new JButton("Create Account");
+		btnSingUp.setPreferredSize(new Dimension(310, 50));
+		//btnSingUp.setBackground(Color.BLACK);
+		btnSingUp.setBorderPainted(false);
+		//btnSingUp.setContentAreaFilled(false);
+		input2.add(btnSingUp);
 		btnSingUp.addActionListener(new ActionListener() {
 			@Override
 			// into SignUpScreen
@@ -115,6 +183,7 @@ public class LoginScreen extends JFrame {
 			}
 		});
 
+		
 		add(panel);
 
 	}
@@ -126,15 +195,24 @@ public class LoginScreen extends JFrame {
 		
 		if (dao.loginCheck(getUserName, getPassword)) {
 			this.dispose(); // 창닫기
-			this.main = new Main(new MainUI(userName.getText(), password.getText())); // 프레임 오픈
-			main.appMain();
+			
+			//administer
+			if(getUserName.equals("admin") && getPassword.equals("admin")) {
+				System.out.println("admin Page!");
+				this.adminUI = new AdminUI(getUserName, getPassword);
+			}else {
+				this.main = new Main(new MainUI(userName.getText(), password.getText(), 0)); // 프레임 오픈
+				main.appMain();
+			}
+			
 			
 		} else {
 			JOptionPane.showMessageDialog(null, "Faild");
 		}
 
 	}
-
+	
+	
 	public void SignUp() {
 		this.dispose();
 		this.signUpScreen = new SignUpUI();

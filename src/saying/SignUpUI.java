@@ -1,5 +1,6 @@
 package saying;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -133,6 +134,7 @@ public class SignUpUI extends JFrame {
 		});
 		
 		btnSave.setBounds(140, 227, 89, 23);
+		btnSave.setBackground(Color.BLACK);
 		panel.add(btnSave);
 		
 		btnBack = new JButton("back");

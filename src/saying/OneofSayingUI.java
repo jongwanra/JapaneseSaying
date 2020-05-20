@@ -31,7 +31,8 @@ public class OneofSayingUI extends JFrame {
 	private String pwd;
 	private JTextArea SayingArea;
 	private JTextArea TransArea;
-	
+	private String[] datas;
+			
 	protected JScrollPane scrollPane1;
 	protected JScrollPane scrollPane2;
 
@@ -41,9 +42,10 @@ public class OneofSayingUI extends JFrame {
 	ImageIcon i = new ImageIcon("./src/Image/Background.jpeg");
 	Image im = i.getImage();
 
-	public OneofSayingUI(String id, String pwd) {
+	public OneofSayingUI(String id, String pwd, String[] datas) {
 		this.id = id;
 		this.pwd = pwd;
+		this.datas = datas;
 		// setting
 		setTitle("one of sayingUI");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -58,7 +60,7 @@ public class OneofSayingUI extends JFrame {
 				back(id, pwd);
 			}
 		});
-
+		
 		MyPanel panel = new MyPanel();
 		placeMainPanel(panel);
 		
@@ -96,10 +98,10 @@ public class OneofSayingUI extends JFrame {
 		TransPanel.setBorder(new TitledBorder(new LineBorder(color1, 5, true)));
 		TransPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		
-		SayingArea = new JTextArea("Saying");
+		SayingArea = new JTextArea(datas[0]);
 		SayingPanel.add(SayingArea);
 		
-		TransArea = new JTextArea("Translate");
+		TransArea = new JTextArea(datas[1]);
 		TransPanel.add(TransArea);
 		
 		
@@ -124,7 +126,7 @@ public class OneofSayingUI extends JFrame {
 		this.pwd = pwd;
 		
 		this.dispose(); // 창닫기
-		this.main = new Main(new MainUI(id, pwd)); // 프레임 오픈
+		this.main = new Main(new MainUI(id, pwd, 0)); // 프레임 오픈
 		main.appMain();
 
 	}

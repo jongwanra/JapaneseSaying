@@ -18,20 +18,24 @@ public class MainUI extends JFrame {
 	protected int saying_cnt = 50;
 	private SayingDAO dao;
 	private LoginScreen loginscreen;
+	private int flag;
 	protected JButton[] btn = new JButton[saying_cnt];
 	protected JScrollPane scrollPane;
 
 	protected JToolBar toolBar = new JToolBar();
 	protected JButton registerOrder = new JButton("Register Order");
 	protected JButton inquiryOrder = new JButton("Inquiry Order");
+	protected JButton userRankingOrder = new JButton("User Ranking");
 	protected String id;
 	protected String pwd;
 	protected String[] datas;
+	
 	ImageIcon i = new ImageIcon("./src/Image/Background.jpeg");
 	Image im = i.getImage();
 	
 
-	public MainUI(String id, String pwd) {
+	public MainUI(String id, String pwd, int flag) {
+		this.flag = flag;
 		// setting
 		setTitle("Japanese Saying Main Screen");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -47,6 +51,7 @@ public class MainUI extends JFrame {
 		
 		toolBar.add(registerOrder); // register Order(basic)
 		toolBar.add(inquiryOrder); //inquiry Order
+		toolBar.add(userRankingOrder);
 		// panel
 		placeMainPanel();
 		setSize(400, 600);
@@ -82,9 +87,13 @@ public class MainUI extends JFrame {
 		//get Data in Dao
 			dao = new SayingDAO();
 			datas = new String[50];
-			datas = dao.getSaying();
+			if(flag == 0)
+				datas = dao.getSayingRegister();
+			else if(flag == 1) 
+				datas = dao.getSayingInquiry();
+			else if(flag == 2)
+				datas = dao.getUserRanking();
 		
-		//
 		for (int i = 0; i < saying_cnt; i++) {
 			
 			btn[i] = new JButton(datas[i]);
@@ -102,9 +111,11 @@ public class MainUI extends JFrame {
 	
 	public void addButtonActionListener(ActionListener listener) {
         // Register Event Listener
-		for(int i=0; i < saying_cnt; i++) {
+		for(int i=0; i < saying_cnt; i++)
 			btn[i].addActionListener(listener);
-		}
+		registerOrder.addActionListener(listener);
+		inquiryOrder.addActionListener(listener);
+		userRankingOrder.addActionListener(listener);
     }
 
 }
