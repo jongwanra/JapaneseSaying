@@ -7,11 +7,11 @@ import java.util.Vector;
 public class SayingDAO {
 
 	String jdbcDriver = "com.mysql.jdbc.Driver";
-	String jdbcUrl = "jdbc:mysql://localhost:3306/madang";
-	String id = "madang";
-	String pwd = "madang";
+	String jdbcUrl = "jdbc:mysql://localhost:3306/JapaneseSaying";
+	String id = "root";
+	String pwd = "dreamele19!";
 
-	SignUpUI ui;
+	SignUpView ui;
 	Connection conn;
 
 	PreparedStatement pstmt;
@@ -23,6 +23,7 @@ public class SayingDAO {
 	int sayingCnt;
 	int sayingIndex;
 	int flag;
+	String userID;
 	String userName;
 	String password;
 	String phoneNum;
@@ -108,7 +109,7 @@ public class SayingDAO {
 
 		connectDB();
 
-		sql = "select UserId, UserName from UserInfo where UserID = ?";
+		sql = "select userID, userPwd from UserInfo where userID = ?";
 		System.out.println(sql);
 
 		try {
@@ -117,8 +118,8 @@ public class SayingDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				String idd = rs.getString("UserId");
-				String pwdd = rs.getString("UserName");
+				String idd = rs.getString("userID");
+				String pwdd = rs.getString("userPwd");
 
 				if (idd.equals(userName) && pwdd.equals(password)) {
 					System.out.println("Success Login");
@@ -146,14 +147,14 @@ public class SayingDAO {
 		int result = 0;
 		connectDB();
 
-		sql = "select max(UserNum) from UserInfo";
+		sql = "select max(userNum) from UserInfo";
 		System.out.println(sql);
 
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				result = rs.getInt("max(UserNum)");
+				result = rs.getInt("max(userNum)");
 			}
 			return result;
 		} catch (Exception e) {
@@ -167,7 +168,7 @@ public class SayingDAO {
 		int result = 0;
 		connectDB();
 
-		sql = "select max(SayingNum) from sayingInfo";
+		sql = "select max(sayingNum) from SayingInfo";
 		System.out.println(sql);
 
 		try {
@@ -185,24 +186,27 @@ public class SayingDAO {
 	}
 
 
-	public boolean newUser(String userName, String password, String phoneNum) {
+	public boolean newUser(String userID, String password, String userName, String phoneNum) {
 
 		this.userNum = SelectUserNum() + 1;
-		this.userName = userName;
+		this.userID = userID;
 		this.password = password;
+		this.userName = userName;
 		this.phoneNum = phoneNum;
+		
 
 		connectDB();
 
-		sql = "insert into UserInfo (UserNum, UserID, UserName, PhoneNum) values (?, ?, ?, ?)";
+		sql = "insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (?, ?, ?, ?, ?)";
 		System.out.println(sql);
 
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, userNum);
-			pstmt.setString(2, userName);
+			pstmt.setString(2, userID);
 			pstmt.setString(3, password);
-			pstmt.setString(4, phoneNum);
+			pstmt.setString(4, userName);
+			pstmt.setString(5, phoneNum);
 			pstmt.executeUpdate(); // SQL문 전송
 			return true;
 
@@ -216,7 +220,7 @@ public class SayingDAO {
 	public String[] getSayingRegister() {
 		int i = 0;
 		String[] datas = new String[50];
-		sql = "select Saying from Sayinginfo";
+		sql = "select saying from Sayinginfo";
 		connectDB();
 		
 		try {
@@ -224,7 +228,7 @@ public class SayingDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				datas[i] = rs.getString("Saying");
+				datas[i] = rs.getString("saying");
 				i++;
 			}
 		} catch (SQLException e) {
@@ -238,7 +242,7 @@ public class SayingDAO {
 	public String[] getSayingInquiry() {
 		int i = 0;
 		String[] datas = new String[50];
-		sql = "select Saying from Sayinginfo";
+		sql = "select saying from SayingInfo";
 		connectDB();
 		
 		try {
@@ -246,7 +250,7 @@ public class SayingDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				datas[i] = rs.getString("Saying");
+				datas[i] = rs.getString("saying");
 				i++;
 			}
 		} catch (SQLException e) {
@@ -260,7 +264,7 @@ public class SayingDAO {
 		int i = 0;
 		String[] datas = new String[50];
 		//내림차순
-		sql = "select UserName from UserInfo ORDER BY UserNum DESC";
+		sql = "select userName from UserInfo ORDER BY userNum DESC";
 		System.out.println(sql);
 		connectDB();
 		
@@ -269,7 +273,7 @@ public class SayingDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				datas[i] = rs.getString("UserName");
+				datas[i] = rs.getString("userName");
 				i++;
 			}
 		} catch (SQLException e) {
@@ -284,18 +288,14 @@ public class SayingDAO {
 		this.sayingNum = SelectSayingNum() + 1;
 		this.saying = saying;
 		this.korean = korean;
-		this.sayingCnt = sayingNum;
-		//this.sayingNum = SelectUserNum() + 1;
-		//this.sayingCnt = SelectUserNum() + 1;
-
+		
 		connectDB();
-		sql = "insert into SayingInfo (SayingNum, Saying, Korean, SayingCnt) values(?,?,?,?)";
+		sql = "insert into SayingInfo (sayingNum, saying, korean) values(?,?,?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, sayingNum);
 			pstmt.setString(2, saying);
 			pstmt.setString(3, korean);
-			pstmt.setInt(4, sayingCnt);
 			pstmt.executeUpdate(); // SQL문 전송
 
 			pstmt.close();

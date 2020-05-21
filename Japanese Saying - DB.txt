@@ -2,51 +2,59 @@ Data Base
 
 //User Information
 create table UserInfo(
-UserNum int(11) not null auto_increment,
-UserID varchar(15) not null,
-UserPwd varchar(15) not null,
-UserName varchar(15) not null,
-PhoneNum varchar(15) not null,
-primary key(UserNum)
+userNum int(11) not null auto_increment,
+userID varchar(15) not null,
+userPwd varchar(15) not null,
+userName varchar(15) not null,
+phoneNum varchar(15) not null,
+primary key(userNum)
 )auto_increment = 1;
 
 //Saying Information
 create table SayingInfo(
-SayingNum int(11) not null auto_increment,
-Saying varchar(100) not null,
-Korean varchar(100) not null,
-SayingCnt int(11) not null,
-primary key(SayingNum)
+sayingNum int(11) not null auto_increment,
+saying varchar(100) not null,
+korean varchar(100) not null,
+primary key(sayingNum)
 )auto_increment = 1;
 
-
+//Saying Inquiry Count
 create table SayingCnt(
-UserInfo_UserNum int(11) not null,
-SayingInfo_SayingNum int(11) not null,
-SayingInfo_SayingCnt int(11) not null,
-FOREIGN KEY(UserInfo_UserNum) REFERENCES UserInfo (UserNum),
-FOREIGN KEY(SayingInfo_SayingNum)REFERENCES SayingInfo (SayingNum),
-FOREIGN KEY(SayingInfo_SayingCnt) REFERENCES SayingInfo (SayingCnt)
+sayingNum int(11) not null,
+sayingCnt int(11) not null,
+FOREIGN KEY(sayingNum)REFERENCES SayingInfo (sayingNum)
 );
 
+
+//User Inquiry Count
+create table UserCnt(
+userNum int(11) not null,
+userCnt int(11) not null,
+FOREIGN KEY(userNum)REFERENCES UserInfo (userNum)
+);
+
+
+//Saying Ranking
 create table SayingRanking(
-SayingRanking int(11) not null auto_increment,
-SayingCnt int(11) not null,
-SayingNum int(11) not null,
-Saying varchar(100) not null,
-primary key(SayingRanking),
-FOREIGN KEY SayingCnt REFERENCES SayingInfo (SayingCnt),
-FOREIGN KEY SayingNum REFERENCES SayingInfo (SayingNum),
-FOREIGN KEY Saying REFERENCES SayingInfo (Saying)
-)auto_increment = 1;
+sayingRanking int(11) not null auto_increment,
+sayingNum int(11) not null,
+primary key(sayingRanking),
+FOREIGN KEY (sayingNum) REFERENCES SayingInfo (sayingNum)
+);
 
 
+//User Ranking
 create table UserRanking(
-UserRanking int(11) not null auto_increment,
-UserCnt int(11) not null,
-UserNum int(11) not null,
-UserName varchar(15) not null,
-primary key(UserRanking),
-FOREIGN KEY UserNum REFERENCES UserInfo (UserNum),
-FOREIGN KEY UserName REFERENCES UserInfo (Username)
-)auto_increment = 1;
+userRanking int(11) not null auto_increment,
+userNum int(11) not null,
+primary key(userRanking),
+FOREIGN KEY (userNum) REFERENCES UserInfo (userNum)
+);
+
+
+
+//동시에 보기
+select UserInfo.*,UserCnt.* from UserInfo left join UserCnt on UserInfo.userNum = UserCnt.userNum;
+select UserInfo.*,UserCnt.userCnt from UserInfo left join UserCnt on UserInfo.userNum = UserCnt.userNum;
+
+
