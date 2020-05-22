@@ -19,9 +19,9 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-public class AdminView extends JFrame {
+public class AdminCreateView extends JFrame {
 	private SayingDAO dao;
-	private LoginView loginScreen;
+	private LoginView loginView;
 	protected String id;
 	protected String pwd;
 	protected JScrollPane sayingScroll;
@@ -36,16 +36,19 @@ public class AdminView extends JFrame {
 	protected JButton deleteBtn;
 	protected JButton addBtn;
 	protected JButton backBtn;
-	protected int flag = 0;
 
 	Font font;
 
 	ImageIcon i = new ImageIcon("./src/Image/mainLogo.png");
 	Image im = i.getImage();
 
-	public AdminView(String id, String pwd) {
+	public AdminCreateView(String id, String pwd) {
 		this.id = id;
 		this.pwd = pwd;
+
+		System.out.println(id + "!!");
+		System.out.println(pwd + "!!");
+
 		font = new Font("휴먼고딕", Font.PLAIN, 12);
 
 		setTitle("Japanese Admain View");
@@ -56,7 +59,7 @@ public class AdminView extends JFrame {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
 		MyPanel imagePanel = new MyPanel();
-		JPanel mainPanel = new JPanel();
+//		JPanel mainPanel = new JPanel();
 
 		imagePlacePanel(imagePanel);
 
@@ -66,45 +69,17 @@ public class AdminView extends JFrame {
 		deleteBtn = new JButton("Delete");
 		backBtn = new JButton("Back");
 
-		if (flag == 0) {
-			mainBtnMethod(createBtn);
-			BtnMethod(readBtn);
-			BtnMethod(updateBtn);
-			BtnMethod(deleteBtn);
-			BtnMethod(backBtn);
-			
-			JPanel createPanel = new JPanel();
-			createMainPenel(createPanel);
-		} else if (flag == 1) {
-			BtnMethod(createBtn);
-			mainBtnMethod(readBtn);
-			BtnMethod(updateBtn);
-			BtnMethod(deleteBtn);
-			BtnMethod(backBtn);
-			
-			JPanel readPanel = new JPanel();
-			readMainPanel(readPanel);
-		} else if (flag == 2) {
-			BtnMethod(createBtn);
-			BtnMethod(readBtn);
-			mainBtnMethod(updateBtn);
-			BtnMethod(deleteBtn);
-			BtnMethod(backBtn);
-			
-			JPanel updatePanel = new JPanel();
-			updateMainPanel(updatePanel);
-		} else if (flag == 3) {
-			BtnMethod(createBtn);
-			BtnMethod(readBtn);
-			BtnMethod(updateBtn);
-			mainBtnMethod(deleteBtn);
-			BtnMethod(backBtn);
-			
-			JPanel deletePanel = new JPanel();
-			deleteMainPanel(deletePanel);
-		}
-		
+		mainBtnMethod(createBtn);
+		BtnMethod(readBtn);
+		BtnMethod(updateBtn);
+		BtnMethod(deleteBtn);
+		BtnMethod(backBtn);
+
+		JPanel createPanel = new JPanel();
+		createMainPenel(createPanel);
+
 		setSize(400, 600);
+
 		// visible
 		setVisible(true);
 
@@ -154,7 +129,7 @@ public class AdminView extends JFrame {
 	}
 
 	private void createMainPenel(JPanel panel) {
-		// TODO Auto-generated method stub
+
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		panel.setPreferredSize(new Dimension(400, 500));
 		panel.setBackground(Color.WHITE);
@@ -172,7 +147,7 @@ public class AdminView extends JFrame {
 		koreanPanel.setPreferredSize(new Dimension(400, 200));
 		koreanPanel.setBorder(new TitledBorder(new LineBorder(Color.WHITE, 5, false)));
 		koreanPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		
+
 		addPanel.setBackground(Color.WHITE);
 		addPanel.setPreferredSize(new Dimension(400, 100));
 		addPanel.setBorder(new TitledBorder(new LineBorder(Color.WHITE, 5, false)));
@@ -202,67 +177,19 @@ public class AdminView extends JFrame {
 
 		add(sayingScroll);
 		add(koreanScroll);
-		
-		addBtn = new JButton("Save");
+
+		addBtn = new JButton("Add");
 		addBtn.setPreferredSize(new Dimension(330, 50));
 		addBtn.setBorderPainted(false);
 		addBtn.setOpaque(true);
 		addBtn.setBackground(Color.BLACK);
 		addBtn.setForeground(Color.WHITE);
 		addBtn.setFont(font);
-		
+
 		addPanel.add(addBtn);
-		
+
 		add(addPanel);
-		
-		
-		
 
-//		addBtn = new JButton("add");
-//		addBtn.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				dao = new SayingDAO();
-//
-//				String sayingTxt = sayingArea.getText();
-//				String koreanTxt = koreanArea.getText();
-//
-//				if (dao.newSaying(sayingTxt, koreanTxt)) {
-//					System.out.println("addSaying Success!");
-//					sayingArea.setText("");
-//					koreanArea.setText("");
-//
-//				} else {
-//					System.out.println("addSaying error!");
-//				}
-//			}
-//		});
-//
-//		backBtn = new JButton("back");
-//		backBtn.setBounds(120, 500, 50, 50);
-//
-//		add(backBtn);
-//		add(addBtn);
-	}
-
-	private void readMainPanel(JPanel panel) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void updateMainPanel(JPanel panel) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void deleteMainPanel(JPanel panel) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void back() {
-		this.dispose();
-		this.loginScreen = new LoginView();
 	}
 
 	public static void main(String[] args) {
@@ -271,9 +198,12 @@ public class AdminView extends JFrame {
 
 //Register Event Listener
 	public void addButtonActionListener(ActionListener listener) {
-
-//		addBtn.addActionListener(listener);
-//		backBtn.addActionListener(listener);
+		addBtn.addActionListener(listener);
+		backBtn.addActionListener(listener);
+		createBtn.addActionListener(listener);
+		readBtn.addActionListener(listener);
+		updateBtn.addActionListener(listener);
+		deleteBtn.addActionListener(listener);
 	}
 
 }

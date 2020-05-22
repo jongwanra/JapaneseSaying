@@ -27,7 +27,7 @@ public class LoginView extends JFrame {
 	private SayingDAO dao;
 	
 	MainView mainUI;
-	AdminView adminUI;
+	AdminCreateView adminUI;
 	MainController main;
 	SignUpView signUpScreen;
 	JButton btnLogin, btnSignUp;

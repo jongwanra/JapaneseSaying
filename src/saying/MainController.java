@@ -82,7 +82,9 @@ public class MainController {
 		this.index = index;
 		this.flag = flag;
 
+		
 		dao = new SayingDAO();
+		
 		datas = dao.getOneofSaying(index, flag);
 		dao.sayingCount(index); //접속하면, 해당 sayingCnt가 1추가 
 		

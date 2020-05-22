@@ -10,7 +10,8 @@ public class LoginController {
 	private SayingModel model;
 	private SignUpView signUpView;
 	private SignUpController signUpController;
-	private AdminView adminView;
+	private AdminCreateView adminView;
+	private AdminCreateController adminController;
 	private MainController mainController;
 	private SayingDAO dao;
 	
@@ -63,7 +64,9 @@ public class LoginController {
 			// administer
 			if (getUserName.equals("admin") && getPassword.equals("admin")) {
 				System.out.println("admin Page!");
-				this.adminView = new AdminView(getUserName, getPassword);
+				this.adminController = new AdminCreateController(new AdminCreateView(getUserName, getPassword));
+				this.adminController.appMain();
+						
 			} else {
 				dao.loginCount(getUserName, getPassword);
 				
