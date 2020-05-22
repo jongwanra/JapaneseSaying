@@ -12,8 +12,9 @@ public class LoginController {
 	private SignUpController signUpController;
 	private AdminView adminView;
 	private MainController mainController;
-	
 	private SayingDAO dao;
+	
+	private String[] datas;
 	
 	public LoginController(LoginView view) {
 		this.view = view;
@@ -64,8 +65,13 @@ public class LoginController {
 				System.out.println("admin Page!");
 				this.adminView = new AdminView(getUserName, getPassword);
 			} else {
-				this.mainController = new MainController(new MainView(view.userName.getText(), view.password.getText(), 0)); // 프레임 오픈
+				dao.loginCount(getUserName, getPassword);
+				
+				datas = new String[50];
+				datas = dao.getSayingRegister();
+				this.mainController = new MainController(new MainView(getUserName, getPassword, 0, datas)); 
 				mainController.appMain();
+				
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Faild");

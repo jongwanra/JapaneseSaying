@@ -23,19 +23,12 @@ public class MainController {
 	private int index;
 	private String[] datas;
 	private int saying_cnt;
-	private int flag;
+	private int flag = 0;
 
-	Logger logger;
 	boolean status;
-	Thread thread;
 
 	public MainController(MainView view) {
-		// logger = Logger.getLogger(this.getClass().getName());
 		this.view = view;
-	}
-
-	public void refresh() {
-
 	}
 
 	public void appMain() {
@@ -44,22 +37,21 @@ public class MainController {
 		view.addButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				flag = 0;
 				Object obj = e.getSource();
-				
-				 if (obj == view.registerOrder) {
+
+				if (obj == view.registerOrder) {
 					System.out.println("registerOrder!!");
 					registerOrder(view.id, view.pwd, index);
 					flag = 0;
-				}else if (obj == view.inquiryOrder) {
+				} else if (obj == view.inquiryOrder) {
 					System.out.println("inquiryOrder!!");
 					inquiryOrder(view.id, view.pwd);
 					flag = 1;
-				}else if (obj == view.userRankingOrder) {
+				} else if (obj == view.userRankingOrder) {
 					System.out.println("user Ranking Order!!");
 					userRankingOrder(view.id, view.pwd);
 					flag = 2;
-				}else if(obj == view.backBtn) {
+				} else if (obj == view.backBtn) {
 					System.out.println("BackBtn!!");
 					back();
 				}
@@ -69,7 +61,7 @@ public class MainController {
 						EnterSaying(view.id, view.pwd, i, flag);
 					}
 				}
-				
+
 			}
 
 		});
@@ -92,38 +84,52 @@ public class MainController {
 
 		dao = new SayingDAO();
 		datas = dao.getOneofSaying(index, flag);
-
+		dao.sayingCount(index); //접속하면, 해당 sayingCnt가 1추가 
+		
 		// close
-		view.dispose(); 
+		view.dispose();
 		this.oneofSayingController = new OneofSayingController(new OneofSayingView(id, pwd, datas)); // 프레임 오픈
 		this.oneofSayingController.appMain();
 	}
-
+	
 	public void registerOrder(String id, String pwd, int saying_cnt) {
+
+		dao = new SayingDAO();
+		datas = new String[50];
+		
+		datas = dao.getSayingRegister();
 		
 		this.id = id;
 		this.pwd = pwd;
-	
+
 		view.dispose();
-		main = new MainController(new MainView(id, pwd, 0)); // 프레임 오픈
+		main = new MainController(new MainView(id, pwd, 0, datas)); // 프레임 오픈
 		main.appMain();
 	}
 
 	public void inquiryOrder(String id, String pwd) {
 		this.id = id;
 		this.pwd = pwd;
-
+		
+		dao = new SayingDAO();
+		datas = new String[50];
+		datas = dao.getSayingInquiry();
 		view.dispose();
-		main = new MainController(new MainView(id, pwd, 1));
+		main = new MainController(new MainView(id, pwd, 1, datas));
 		main.appMain();
 	}
 
 	public void userRankingOrder(String id, String pwd) {
+		
+		dao = new SayingDAO();
+		datas = new String[50];
+		datas = dao.getUserRanking();
+		
 		this.id = id;
 		this.pwd = pwd;
-
+		
 		view.dispose();
-		main = new MainController(new MainView(id, pwd, 2));
+		main = new MainController(new MainView(id, pwd, 2, datas));
 		main.appMain();
 	}
 

@@ -18,17 +18,20 @@ public class SayingDAO {
 	ResultSet rs;
 
 	String sql;
-	int userNum;
-	int sayingNum;
-	int sayingCnt;
-	int sayingIndex;
-	int flag;
-	String userID;
-	String userName;
-	String password;
-	String phoneNum;
-	String saying;
-	String korean;
+	String sql2;
+	
+	
+	private int userNum;
+	private int sayingNum;
+	private int sayingCnt;
+	private int sayingIndex;
+	private int flag;
+	private String userID;
+	private String userName;
+	private String userPwd;
+	private String phoneNum;
+	private String saying;
+	private String korean;
 
 	// DB Connect
 	public void connectDB() {
@@ -52,7 +55,7 @@ public class SayingDAO {
 		}
 	}
 	
-	public String[] getOneofSaying(int sayingIndex, int flag) {
+public String[] getOneofSaying(int sayingIndex, int flag) {
 		
 		String[] datas = new String[2];
 		this.sayingIndex = sayingIndex;
@@ -102,10 +105,10 @@ public class SayingDAO {
 	}
 
 	// Check ID && PWD
-	public boolean loginCheck(String userName, String password) {
+	public boolean loginCheck(String userName, String userPwd) {
 
 		this.userName = userName;
-		this.password = password;
+		this.userPwd = userPwd;
 
 		connectDB();
 
@@ -121,7 +124,7 @@ public class SayingDAO {
 				String idd = rs.getString("userID");
 				String pwdd = rs.getString("userPwd");
 
-				if (idd.equals(userName) && pwdd.equals(password)) {
+				if (idd.equals(userName) && pwdd.equals(userPwd)) {
 					System.out.println("Success Login");
 					closeDB();
 					return true;
@@ -141,6 +144,75 @@ public class SayingDAO {
 
 		return false;
 	}
+	
+	//Count the login number
+	public void loginCount(String userID, String userPwd) {
+		
+		this.userID = userID;
+		this.userPwd = userPwd;
+		int num = 0;
+		
+		sql = "select userNum from UserInfo where userID = (?) and userPwd = (?)";
+		System.out.println(sql);
+		connectDB();
+		// in UserInfo table, get UserNum;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userID);
+			pstmt.setString(2, userPwd);
+			rs = pstmt.executeQuery();
+
+			if(rs.next()) {
+				num = rs.getInt("userNum");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Failed Login");
+			e.printStackTrace();
+		}
+		
+		//and if that is succeed, userCnt += 1; 
+		sql = "update UserCnt set userCnt = userCnt + 1 where userNum = (?)";
+		System.out.println(sql);
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+    		pstmt.executeUpdate();	// SQL문 전송
+    		closeDB();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			closeDB();
+		}
+	}
+	
+	//Count the Saying number
+		public void sayingCount(int sayingIndex) {
+			
+			this.sayingIndex = sayingIndex;
+			
+			connectDB();
+			
+			//and if that is succeed, userCnt += 1; 
+			sql = "update SayingCnt set sayingCnt = sayingCnt + 1 where sayingNum = (?)";
+			System.out.println(sql);
+			
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, (sayingIndex + 1));
+	    		pstmt.executeUpdate();	// SQL문 전송
+	    		closeDB();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				closeDB();
+			}
+		}
 
 	// new Number
 	public int SelectUserNum() {
@@ -164,33 +236,16 @@ public class SayingDAO {
 
 	}
 	
-	public int SelectSayingNum() {
-		int result = 0;
-		connectDB();
-
-		sql = "select max(sayingNum) from SayingInfo";
-		System.out.println(sql);
-
-		try {
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				result = rs.getInt("max(sayingNum)");
-			}
-			return result;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-
-	}
+	
+	
+	
 
 
-	public boolean newUser(String userID, String password, String userName, String phoneNum) {
+	public boolean newUser(String userID, String userPwd, String userName, String phoneNum) {
 
 		this.userNum = SelectUserNum() + 1;
 		this.userID = userID;
-		this.password = password;
+		this.userPwd = userPwd;
 		this.userName = userName;
 		this.phoneNum = phoneNum;
 		
@@ -198,23 +253,31 @@ public class SayingDAO {
 		connectDB();
 
 		sql = "insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (?, ?, ?, ?, ?)";
+		sql2 = "insert into UserCnt (userNum, userCnt) values (?,?)";
 		System.out.println(sql);
+		System.out.println(sql2);
 
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, userNum);
 			pstmt.setString(2, userID);
-			pstmt.setString(3, password);
+			pstmt.setString(3, userPwd);
 			pstmt.setString(4, userName);
 			pstmt.setString(5, phoneNum);
 			pstmt.executeUpdate(); // SQL문 전송
+			
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setInt(1, userNum);
+			pstmt.setInt(2, 0);
+			pstmt.executeUpdate();
+			
 			return true;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-
+		
 	}
 	//register Order
 	public String[] getSayingRegister() {
@@ -222,7 +285,6 @@ public class SayingDAO {
 		String[] datas = new String[50];
 		sql = "select saying from Sayinginfo";
 		connectDB();
-		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -235,14 +297,16 @@ public class SayingDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return datas;
 	}
 	
 	public String[] getSayingInquiry() {
 		int i = 0;
 		String[] datas = new String[50];
-		sql = "select saying from SayingInfo";
+		sql = "select SayingInfo.Saying from SayingInfo"
+				+ " left join SayingCnt on SayingInfo.sayingNum = SayingCnt.sayingNum"
+				+ " order by SayingCnt.sayingCnt desc"; 
+	
 		connectDB();
 		
 		try {
@@ -264,7 +328,7 @@ public class SayingDAO {
 		int i = 0;
 		String[] datas = new String[50];
 		//내림차순
-		sql = "select userName from UserInfo ORDER BY userNum DESC";
+		sql = "select UserInfo.userID from UserInfo left join UserCnt on UserInfo.userNum = UserCnt.userNum ORDER BY UserCnt.userCnt DESC";
 		System.out.println(sql);
 		connectDB();
 		
@@ -273,7 +337,7 @@ public class SayingDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				datas[i] = rs.getString("userName");
+				datas[i] = rs.getString("userID");
 				i++;
 			}
 		} catch (SQLException e) {
@@ -283,45 +347,7 @@ public class SayingDAO {
 		return datas;
 	}
 	
-	public boolean newSaying(String saying, String korean) {
-		
-		this.sayingNum = SelectSayingNum() + 1;
-		this.saying = saying;
-		this.korean = korean;
-		
-		connectDB();
-		sql = "insert into SayingInfo (sayingNum, saying, korean) values(?,?,?)";
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, sayingNum);
-			pstmt.setString(2, saying);
-			pstmt.setString(3, korean);
-			pstmt.executeUpdate(); // SQL문 전송
-
-			pstmt.close();
-			conn.close();
-			return true;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	public boolean deleteSaying(int num) {
-		connectDB();
-		sql = "update ...";
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
-			pstmt.executeUpdate(); // SQL문 전송
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
+	
 	public int[] refreshSaying() {
 		int[] stat = new int[50];
 		int i = 0;

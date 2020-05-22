@@ -55,6 +55,11 @@ FOREIGN KEY (userNum) REFERENCES UserInfo (userNum)
 
 //동시에 보기
 select UserInfo.*,UserCnt.* from UserInfo left join UserCnt on UserInfo.userNum = UserCnt.userNum;
-select UserInfo.*,UserCnt.userCnt from UserInfo left join UserCnt on UserInfo.userNum = UserCnt.userNum;
+
+select UserInfo.userID,UserCnt.userCnt from UserInfo left join UserCnt on UserInfo.userNum = UserCnt.userNum order by UserCnt.userCnt desc;
+
+select SayingInfo.Saying, SayingCnt.sayingCnt from SayingInfo left join SayingCnt on SayingInfo.sayingNum = SayingCnt.sayingNum order by SayingCnt.sayingCnt desc;
+
+
 
 
