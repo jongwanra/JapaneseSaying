@@ -11,12 +11,12 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 
 public class MainController {
-	private final MainView mainUI;
+	private final MainView view;
 	private MainController main;
 	private SayingDAO dao;
 
-	private LoginView loginScreen;
-	private OneofSayingView oneofSayingUI;
+	private LoginController loginController;
+	private OneofSayingController oneofSayingController;
 
 	private String id;
 	private String pwd;
@@ -29,9 +29,9 @@ public class MainController {
 	boolean status;
 	Thread thread;
 
-	public MainController(MainView mainUI) {
+	public MainController(MainView view) {
 		// logger = Logger.getLogger(this.getClass().getName());
-		this.mainUI = mainUI;
+		this.view = view;
 	}
 
 	public void refresh() {
@@ -41,29 +41,32 @@ public class MainController {
 	public void appMain() {
 
 		// if press the SayingBtn, add Event
-		mainUI.addButtonActionListener(new ActionListener() {
+		view.addButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				flag = 0;
 				Object obj = e.getSource();
 				
-				 if (obj == mainUI.registerOrder) {
+				 if (obj == view.registerOrder) {
 					System.out.println("registerOrder!!");
-					registerOrder(mainUI.id, mainUI.pwd, index);
+					registerOrder(view.id, view.pwd, index);
 					flag = 0;
-				}else if (obj == mainUI.inquiryOrder) {
+				}else if (obj == view.inquiryOrder) {
 					System.out.println("inquiryOrder!!");
-					inquiryOrder(mainUI.id, mainUI.pwd);
+					inquiryOrder(view.id, view.pwd);
 					flag = 1;
-				}else if (obj == mainUI.userRankingOrder) {
+				}else if (obj == view.userRankingOrder) {
 					System.out.println("user Ranking Order!!");
-					userRankingOrder(mainUI.id, mainUI.pwd);
+					userRankingOrder(view.id, view.pwd);
 					flag = 2;
+				}else if(obj == view.backBtn) {
+					System.out.println("BackBtn!!");
+					back();
 				}
-				for (int i = 0; i < mainUI.saying_cnt; i++) {
-					if (obj == mainUI.btn[i]) {
+				for (int i = 0; i < view.saying_cnt; i++) {
+					if (obj == view.btn[i]) {
 						System.out.println("EnterSaying!!");
-						EnterSaying(mainUI.id, mainUI.pwd, i, flag);
+						EnterSaying(view.id, view.pwd, i, flag);
 					}
 				}
 				
@@ -71,6 +74,13 @@ public class MainController {
 
 		});
 
+	}
+
+	protected void back() {
+		// TODO Auto-generated method stub
+		view.dispose(); // 창닫기
+		this.loginController = new LoginController(new LoginView());
+		this.loginController.appMain();
 	}
 
 	public void EnterSaying(String id, String pwd, int index, int flag) {
@@ -84,9 +94,9 @@ public class MainController {
 		datas = dao.getOneofSaying(index, flag);
 
 		// close
-		mainUI.dispose(); 
-		this.oneofSayingUI = new OneofSayingView(id, pwd, datas); // 프레임 오픈
-
+		view.dispose(); 
+		this.oneofSayingController = new OneofSayingController(new OneofSayingView(id, pwd, datas)); // 프레임 오픈
+		this.oneofSayingController.appMain();
 	}
 
 	public void registerOrder(String id, String pwd, int saying_cnt) {
@@ -94,7 +104,7 @@ public class MainController {
 		this.id = id;
 		this.pwd = pwd;
 	
-		mainUI.dispose();
+		view.dispose();
 		main = new MainController(new MainView(id, pwd, 0)); // 프레임 오픈
 		main.appMain();
 	}
@@ -103,7 +113,7 @@ public class MainController {
 		this.id = id;
 		this.pwd = pwd;
 
-		mainUI.dispose();
+		view.dispose();
 		main = new MainController(new MainView(id, pwd, 1));
 		main.appMain();
 	}
@@ -112,7 +122,7 @@ public class MainController {
 		this.id = id;
 		this.pwd = pwd;
 
-		mainUI.dispose();
+		view.dispose();
 		main = new MainController(new MainView(id, pwd, 2));
 		main.appMain();
 	}

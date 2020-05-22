@@ -49,7 +49,7 @@ public class AdminView extends JFrame {
 		//setLayout(null);
 
 		setResizable(false);
-		setLocation(600, 350);
+		setLocation(600, 100);
 
 		// MyPanel panel = new MyPanel();
 		MyPanel panel = new MyPanel();
