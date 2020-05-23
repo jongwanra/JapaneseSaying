@@ -161,16 +161,3 @@ public class LoginView extends JFrame {
 	}
 
 }
-
-
-// Changing Icon Size
-//ImageIcon idIcon = new ImageIcon("./src/Image/LoginID.png");
-//Image idImg = idIcon.getImage();
-//Image changedIdImg = idImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-//ImageIcon newIdIcon = new ImageIcon(changedIdImg);
-//
-//ImageIcon pwdIcon = new ImageIcon("./src/Image/LoginPWD.png");
-//Image pwdImg = pwdIcon.getImage();
-//Image changedPwdImg = pwdImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-//ImageIcon newPwdIcon = new ImageIcon(changedPwdImg);
-

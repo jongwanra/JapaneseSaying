@@ -20,10 +20,9 @@ import javax.swing.border.MatteBorder;
 public class MainView extends JFrame {
 
 	private LoginView loginscreen;
+	private SayingDAO dao;
 	private int flag = 0;
 
-	protected int saying_cnt = 50;
-	protected JButton[] btn = new JButton[saying_cnt];
 	protected JScrollPane scrollPane;
 	protected JButton registerOrder;
 	protected JButton inquiryOrder;
@@ -32,6 +31,8 @@ public class MainView extends JFrame {
 	protected String id;
 	protected String pwd;
 	protected String[] datas;
+	protected JButton[] btn;
+
 	Font font;
 	LineBorder btnBorder;
 
@@ -49,7 +50,7 @@ public class MainView extends JFrame {
 	ImageIcon originIcon3 = new ImageIcon("./src/Image/Bronze.png");
 	Image originImg3 = originIcon3.getImage();
 	Image changedImg3 = originImg3.getScaledInstance(18, 42, Image.SCALE_SMOOTH);
-	
+
 	ImageIcon originIcon4 = new ImageIcon("./src/Image/EmptyLogo.png");
 	Image originImg4 = originIcon4.getImage();
 	Image changedImg4 = originImg4.getScaledInstance(18, 42, Image.SCALE_SMOOTH);
@@ -59,9 +60,22 @@ public class MainView extends JFrame {
 	ImageIcon bronze = new ImageIcon(changedImg3);
 	ImageIcon empty = new ImageIcon(changedImg4);
 
-	public MainView(String id, String pwd, int flag, String[] datas) {
+	public MainView(String id, String pwd, int flag) {
+		this.id = id;
+		this.pwd = pwd;
 		this.flag = flag;
-		this.datas = datas;
+
+		dao = new SayingDAO();
+		if (flag == 0)
+			datas = dao.getSayingRegister();
+		else if (flag == 1)
+			datas = dao.getSayingInquiry();
+		else if (flag == 2)
+			datas = dao.getUserRanking();
+
+		btn = new JButton[datas.length];
+		
+
 		font = new Font("휴먼고딕", Font.PLAIN, 12);
 
 		// setting
@@ -102,9 +116,6 @@ public class MainView extends JFrame {
 		mainPlacePanel(mainPanel);
 
 		setSize(400, 600);
-
-		this.id = id;
-		this.pwd = pwd;
 
 		System.out.println(id);
 		System.out.println(pwd);
@@ -159,21 +170,20 @@ public class MainView extends JFrame {
 	}
 
 	public void mainPlacePanel(JPanel panel) {
-
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 0));
-		panel.setPreferredSize(new Dimension(340, 100 * saying_cnt));
+		panel.setPreferredSize(new Dimension(340, 100 * datas.length));
 		panel.setBackground(Color.WHITE);
 
-		//when registerOrder
+		// when registerOrder
 		if (flag == 0) {
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < datas.length; i++) {
 				btn[i] = new JButton(datas[i], empty);
 				btnDesign(btn[i], panel);
 			}
-		} 
-		//else
+		}
+		// when inquiryOrder
 		else {
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < datas.length; i++) {
 				if (i >= 0 && i <= 2 && datas[i] != null) {
 					if (i == 0)
 						btn[i] = new JButton(datas[i], gold);
@@ -183,7 +193,6 @@ public class MainView extends JFrame {
 						btn[i] = new JButton(datas[i], bronze);
 				} else
 					btn[i] = new JButton(datas[i], empty);
-
 				btnDesign(btn[i], panel);
 			}
 		}
@@ -214,8 +223,9 @@ public class MainView extends JFrame {
 
 	public void addButtonActionListener(ActionListener listener) {
 		// Register Event Listener
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < datas.length; i++)
 			btn[i].addActionListener(listener);
+
 		registerOrder.addActionListener(listener);
 		inquiryOrder.addActionListener(listener);
 		userRankingOrder.addActionListener(listener);

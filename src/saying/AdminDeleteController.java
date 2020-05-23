@@ -3,6 +3,8 @@ package saying;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 public class AdminDeleteController {
 	private AdminDeleteView view;
 	private AdminDeleteController controller;
@@ -12,6 +14,7 @@ public class AdminDeleteController {
 	private SayingDAO dao;
 	private LoginController loginController;
 
+	
 	protected String sayingTxt;
 	protected String koreanTxt;
 	protected String id;
@@ -29,7 +32,15 @@ public class AdminDeleteController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Object obj = e.getSource();
-
+				for(int i = 0; i < view.userCnt; i++) {
+					if(obj == view.userBtn[i]) {
+						userDelete(i);
+					}
+				}
+				for(int i = 0; i < view.sayingCnt; i++) {
+					if(obj == view.sayingBtn[i])
+						sayingDelete(i);
+				}
 				if (obj == view.backBtn) {
 					System.out.println("BackBtn!!");
 					back();
@@ -51,6 +62,54 @@ public class AdminDeleteController {
 
 		});
 
+	}
+	
+	//delete saying?
+	protected void sayingDelete(int index) {
+		int result = JOptionPane.showConfirmDialog(null, "<html><p>Are you Sure?</p><p>Delete SayingNum: "
+				 + (index + 1) + "?</p></html>" ,"Confirm", JOptionPane.YES_NO_OPTION);
+		if(result == JOptionPane.YES_OPTION) {
+			//Yes
+			System.out.println("yes!!");
+			dao = new SayingDAO();
+			if(dao.deleteSaying(index + 1)) {
+				System.out.println("success!!");
+				refresh();
+			}else {
+				System.out.println("fail!!");
+			}
+		}else {
+			//No
+			System.out.println("no!!");
+		}
+		
+	}
+
+	private void refresh() {
+		view.dispose();
+		controller = new AdminDeleteController(new AdminDeleteView(id, pwd));
+		controller.appMain();
+	}
+
+	//delete user?
+	protected void userDelete(int index) {
+		int result = JOptionPane.showConfirmDialog(null, "<html><p>Are you Sure?</p><p>Delete UserNum: "
+				 + (index + 1) + "?</p></html>" ,"Confirm", JOptionPane.YES_NO_OPTION);
+		if(result == JOptionPane.YES_OPTION) {
+			//Yes
+			System.out.println("yes!!");
+			dao = new SayingDAO();
+			if(dao.deleteUser(index + 1)) {
+				System.out.println("success!!");
+				refresh();
+			}else {
+				System.out.println("fail!!");
+			}
+		}else {
+			//No
+			System.out.println("no!!");
+		}
+		
 	}
 
 	protected void createMethod(String id, String pwd) {

@@ -3,6 +3,8 @@ package saying;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 public class AdminCreateController {
 	private AdminCreateView view;
 	private AdminCreateController controller;
@@ -94,7 +96,9 @@ public class AdminCreateController {
 		this.sayingTxt = sayingTxt;
 		this.koreanTxt = koreanTxt;
 
-		if (dao.newSaying(sayingTxt, koreanTxt)) {
+		if(sayingTxt.equals("Please Write Saying") || koreanTxt.equals("Please Write Korean")) {
+			JOptionPane.showMessageDialog(null, "Please Input Saying or Korean");
+		}else if (dao.newSaying(sayingTxt, koreanTxt)) {
 			System.out.println("addSaying Success!");
 			view.sayingArea.setText("");
 			view.koreanArea.setText("");

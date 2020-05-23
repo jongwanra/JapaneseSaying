@@ -292,9 +292,14 @@ public String[] getOneofSaying(int sayingIndex, int flag) {
 
 	public boolean deleteSaying(int num) {
 		connectDB();
-		sql = "delete from SayingInfo where sayingNum = (?)";
+		sql = "delete from SayingCnt where sayingNum = (?)";
+		sql2 = "delete from SayingInfo where sayingNum = (?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate(); // SQL문 전송
+			
+			pstmt = conn.prepareStatement(sql2);
 			pstmt.setInt(1, num);
 			pstmt.executeUpdate(); // SQL문 전송
 			return true;
@@ -306,9 +311,14 @@ public String[] getOneofSaying(int sayingIndex, int flag) {
 	
 	public boolean deleteUser(int num) {
 		connectDB();
-		sql = "delete from UserInfo where userNum = (?)";
+		sql = "delete from UserCnt where userNum = (?)";
+		sql2 = "delete from UserInfo where userNum = (?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate(); // SQL문 전송
+			
+			pstmt = conn.prepareStatement(sql2);
 			pstmt.setInt(1, num);
 			pstmt.executeUpdate(); // SQL문 전송
 			return true;
@@ -401,11 +411,59 @@ public String[] getOneofSaying(int sayingIndex, int flag) {
 		return datas;
 	}
 	
+	public String[] getAdminUserRegister() {
+		int i = 0;
+		int num = this.SelectUserNum();
+		String[] datas = new String[num];
+		sql = "select * from UserInfo";
+		connectDB();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				datas[i] = Integer.toString(rs.getInt("userNum")) + " /";
+				datas[i] += rs.getString("userID") + " /";
+				datas[i] += rs.getString("userName")+ " /";
+				datas[i] += rs.getString("phoneNum");
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return datas;
+	}
+	
+	public String[] getAdminSayingRegister() {
+		int i = 0;
+		int num = this.SelectSayingNum();
+		String[] datas = new String[num];
+		sql = "select * from SayingInfo";
+		connectDB();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				datas[i] = "<p>" + Integer.toString(rs.getInt("sayingNum")) + ". ";
+				datas[i] +=  rs.getString("saying") + "</p>";
+				datas[i] += "<p>" + rs.getString("korean") + "</p>";
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return datas;
+	}
+	
 	
 	
 	public String[] getSayingInquiry() {
 		int i = 0;
-		String[] datas = new String[50];
+		int num = this.SelectSayingNum();
+		String[] datas = new String[num];
 		sql = "select SayingInfo.Saying from SayingInfo"
 				+ " left join SayingCnt on SayingInfo.sayingNum = SayingCnt.sayingNum"
 				+ " order by SayingCnt.sayingCnt desc"; 
@@ -429,7 +487,9 @@ public String[] getOneofSaying(int sayingIndex, int flag) {
 	
 	public String[] getUserRanking() {
 		int i = 0;
-		String[] datas = new String[50];
+		int num = 0;
+		num = this.SelectUserNum();
+		String[] datas = new String[num];
 		//내림차순
 		sql = "select UserInfo.userID from UserInfo left join UserCnt on UserInfo.userNum = UserCnt.userNum ORDER BY UserCnt.userCnt DESC";
 		System.out.println(sql);

@@ -43,12 +43,12 @@ public class AdminDeleteView extends JFrame {
 	Image im = i.getImage();
 	private JScrollPane userScrollPane;
 	private JScrollPane sayingScrollPane;
-	private JButton[] userBtn;
-	private JButton[] sayingBtn;
+	protected JButton[] userBtn;
+	protected JButton[] sayingBtn;
 	private String[] userDatas;
 	private String[] sayingDatas;
-	private int userCnt;
-	private int sayingCnt;
+	protected int userCnt;
+	protected int sayingCnt;
 
 	public AdminDeleteView(String id, String pwd) {
 		this.id = id;
@@ -95,12 +95,13 @@ public class AdminDeleteView extends JFrame {
 
 	}
 
+	//User Place
 	private void deleteUserPlace(JPanel panel) {
 		dao = new SayingDAO();
 		this.userCnt = dao.SelectUserNum();
 		
 		userDatas = new String[userCnt];
-		userDatas = dao.getUserRegister();
+		userDatas = dao.getAdminUserRegister();
 		
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 0));
 		panel.setPreferredSize(new Dimension(340, 50 * userCnt));
@@ -108,44 +109,48 @@ public class AdminDeleteView extends JFrame {
 		
 		userBtn = new JButton[userCnt];
 		for (int i = 0; i < userCnt; i++) {
-			userBtn[i] = new JButton(userDatas[i]);
+			userBtn[i] = new JButton("<html>" + userDatas[i] + "</html>");
+			userBtn[i].setPreferredSize(new Dimension(350, 50));
 			btnDesign(userBtn[i], panel);
 			
 		}
 
 		userScrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		userScrollPane.setPreferredSize(new Dimension(400, 250));
+		userScrollPane.setPreferredSize(new Dimension(400, 230));
 		
 		add(userScrollPane);
 
 	}
 	
+	
+	//Saying Place
 	private void deleteSayingPlace(JPanel panel) {
 		
 		dao = new SayingDAO();
 		sayingCnt = dao.SelectSayingNum();
 		sayingDatas = new String[sayingCnt];
-		sayingDatas = dao.getSayingRegister();
+		sayingDatas = dao.getAdminSayingRegister();
+		
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 0));
-		panel.setPreferredSize(new Dimension(340, 50 * sayingCnt));
+		panel.setPreferredSize(new Dimension(340, 80 * sayingCnt));
 		panel.setBackground(Color.WHITE);
 
 		sayingBtn = new JButton[sayingCnt];
 		for (int i = 0; i < sayingCnt; i++) {
-			sayingBtn[i] = new JButton(sayingDatas[i]);
+			sayingBtn[i] = new JButton("<html>" + sayingDatas[i]+ "</html>");
+			sayingBtn[i].setPreferredSize(new Dimension(350, 80));
 			btnDesign(sayingBtn[i], panel);
 		}
 
 		sayingScrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		sayingScrollPane.setPreferredSize(new Dimension(400, 250));
+		sayingScrollPane.setPreferredSize(new Dimension(400, 270));
 		add(sayingScrollPane);
 	}
 
 
 	private void btnDesign(JButton btn, JPanel panel) {
-		btn.setPreferredSize(new Dimension(350, 50));
 		btn.setBorderPainted(true);
 		btn.setBorder(new MatteBorder(0, 0, 1, 0, Color.black));
 		btn.setHorizontalAlignment(SwingConstants.LEFT);
@@ -209,6 +214,12 @@ public class AdminDeleteView extends JFrame {
 
 //Register Event Listener
 	public void addButtonActionListener(ActionListener listener) {
+		for(int i = 0; i < userCnt; i++)
+			userBtn[i].addActionListener(listener);
+		
+		for(int i = 0; i < sayingCnt; i++)
+			sayingBtn[i].addActionListener(listener);
+		
 		backBtn.addActionListener(listener);
 		createBtn.addActionListener(listener);
 		readBtn.addActionListener(listener);

@@ -46,7 +46,7 @@ public class OneofSayingController {
 		
 		
 		view.dispose(); // 창닫기
-		this.mainController = new MainController(new MainView(id, pwd, 0, datas)); // 프레임 오픈
+		this.mainController = new MainController(new MainView(id, pwd, 0)); // 프레임 오픈
 		this.mainController.appMain();
 
 	}

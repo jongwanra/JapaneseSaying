@@ -14,8 +14,9 @@ public class LoginController {
 	private AdminCreateController adminController;
 	private MainController mainController;
 	private SayingDAO dao;
-	
 	private String[] datas;
+	
+	protected int sayingCnt;
 	
 	public LoginController(LoginView view) {
 		this.view = view;
@@ -54,25 +55,26 @@ public class LoginController {
 	
 	protected void login() {
 		
-		dao = new SayingDAO();
+		
 		String getUserName = view.userName.getText();
 		String getPassword = new String(view.password.getText());
-
+		
+		dao = new SayingDAO();
 		if (dao.loginCheck(getUserName, getPassword)) {
-			 view.dispose(); // 창닫기
+			 view.dispose(); // close view
 
 			// administer
 			if (getUserName.equals("admin") && getPassword.equals("admin")) {
 				System.out.println("admin Page!");
-				this.adminController = new AdminCreateController(new AdminCreateView(getUserName, getPassword));
-				this.adminController.appMain();
+				adminController = new AdminCreateController(new AdminCreateView(getUserName, getPassword));
+				adminController.appMain();
 						
-			} else {
+			} 
+			// user
+			else {
+				//user Cnt
 				dao.loginCount(getUserName, getPassword);
-				
-				datas = new String[50];
-				datas = dao.getSayingRegister();
-				this.mainController = new MainController(new MainView(getUserName, getPassword, 0, datas)); 
+				mainController = new MainController(new MainView(getUserName, getPassword, 0)); 
 				mainController.appMain();
 				
 			}
@@ -81,12 +83,12 @@ public class LoginController {
 		}
 
 	}
-
 	protected void signUp() {
 		System.out.println("signUp!!!");
 		view.dispose();
-		this.signUpController = new SignUpController(new SignUpView());
-		this.signUpController.appMain();
+		
+		signUpController = new SignUpController(new SignUpView());
+		signUpController.appMain();
 	}
 	
 
