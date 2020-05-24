@@ -3,6 +3,9 @@
 <p>Japanese Wise Saying(Japanese Saying)</p>
 <p>日本語の名言</p>
 
+<img width="400" alt="LoginView" src="https://user-images.githubusercontent.com/43265235/82762372-9186a180-9e3b-11ea-8052-8830e250fdf7.png">
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
