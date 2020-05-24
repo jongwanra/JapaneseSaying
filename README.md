@@ -22,10 +22,17 @@
 - 일본어 명언에 대한, 한국어 번역기능 제공
 - 관리자 화면을 통한 손쉬운 명언 및 유저 관리 기능 제공
 
-
 ## 추후 개선사항
 
 - 서버 연결을 통한 댓글 기능
 - 관리자 화면의 CRUD 중 Read/Update 기능
 - 명언 검색기능
+
+<img width="399" alt="AdminView" src="https://user-images.githubusercontent.com/43265235/82763529-5c7e4d00-9e43-11ea-991a-44b88cb5e924.png">
+
+<img width="396" alt="SignUpView" src="https://user-images.githubusercontent.com/43265235/82763532-6011d400-9e43-11ea-89cb-3f8dfde874f5.png">
+
+<img width="398" alt="InquiryOrder" src="https://user-images.githubusercontent.com/43265235/82763533-60aa6a80-9e43-11ea-839e-fba5df4221df.png">
+
+<img width="394" alt="OneofSayingView" src="https://user-images.githubusercontent.com/43265235/82763534-61430100-9e43-11ea-9133-4de124914c1c.png">
 
