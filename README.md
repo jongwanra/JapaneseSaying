@@ -3,7 +3,7 @@
 <p>Japanese Wise Saying(Japanese Saying)</p>
 <p>日本語の名言</p>
 
-![Uploading LoginView.png…]()
+<img width="396" alt="LoginView" src="https://user-images.githubusercontent.com/43265235/82762623-03131f80-9e3d-11ea-9756-f303e1771e0b.png">
 
 ## Getting Started
 
