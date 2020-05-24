@@ -1,91 +1,31 @@
-# Project Title
+# 프로젝트 제목
 
-<p>Japanese Wise Saying(Japanese Saying)</p>
-<p>日本語の名言</p>
+# 일본어 명언
 
 <img width="396" alt="LoginView" src="https://user-images.githubusercontent.com/43265235/82762623-03131f80-9e3d-11ea-9756-f303e1771e0b.png">
 
-## Getting Started
+## 개발하게 된 계기
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+<p>→나는 개인적으로 지치거나 피곤할 때, 글을 통해서 위로를 받는다.</p><p>연애를 어떻게 해야할지 알 수 없을 때, 친구와의 관계가 틀어졌을 때, 하루 일상이 지겨웠을 때 등 힘을 얻기 위해서 "좋은 글귀" 라는 키워드로 다양한 명언들을 접했다.</p>
 
-### Prerequisites
+<h3> 일본어를 공부를 하는 도중에 문득, "일본에는 어떤 좋은 글귀가 있을까?"</h3> 
 
-What things you need to install the software and how to install them
+<p> 라는 의문을 가지게 되었고 찾아보았는데, 한국에는 그런 내용이 한곳에 모아져 있는 공간이 없다는 것을 알게 되었다.</p>
 
-```
-Give examples
-```
 
-### Installing
 
-A step by step series of examples that tell you how to get a development env running
+## 제공 서비스
 
-Say what the step will be
+- 심플한 디자인
+- 유저별 로그인 수에 따른 랭킹을 볼 수 있는 유저 랭킹제 도입
+- 명언별 조회 수에 따른 랭킹을 볼 수 있는 명언 랭킹제 도입
+- 일본어 명언에 대한, 한국어 번역기능 제공
+- 관리자 화면을 통한 손쉬운 명언 및 유저 관리 기능 제공
 
-```
-Give the example
-```
 
-And repeat
+## 추후 개선사항
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+- 서버 연결을 통한 댓글 기능
+- 관리자 화면의 CRUD 중 Read/Update 기능
+- 명언 검색기능
 
