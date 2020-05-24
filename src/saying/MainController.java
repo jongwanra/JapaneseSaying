@@ -24,7 +24,7 @@ public class MainController {
 	private String[] datas;
 	protected int sayingCnt;
 	protected int userCnt;
-	private int flag = 0;
+	private int flag;
 
 	boolean status;
 
@@ -41,30 +41,22 @@ public class MainController {
 				Object obj = e.getSource();
 				
 				if (obj == view.registerOrder) {
-					System.out.println("registerOrder!!");
 					registerOrder(view.id, view.pwd);
 					flag = 0;
 				} else if (obj == view.inquiryOrder) {
-					System.out.println("inquiryOrder!!");
 					inquiryOrder(view.id, view.pwd);
 					flag = 1;
 				} else if (obj == view.userRankingOrder) {
-					System.out.println("user Ranking Order!!");
 					userRankingOrder(view.id, view.pwd);
 					flag = 2;
-				} else if (obj == view.backBtn) {
-					System.out.println("BackBtn!!");
+				} else if (obj == view.backBtn)
 					back();
-				}
+				
 				for (int i = 0; i < view.datas.length; i++) {
-					System.out.println(view.datas.length);
 					if (obj == view.btn[i]) {
-						System.out.println("EnterSaying!!");
-						EnterSaying(view.id, view.pwd, i, flag);
+						EnterSaying(view.id, view.pwd, i, view.flag);
 					}
 				}
-
-
 			}
 
 		});
@@ -72,7 +64,6 @@ public class MainController {
 	}
 
 	protected void back() {
-		// TODO Auto-generated method stub
 		view.dispose(); // 창닫기
 		this.loginController = new LoginController(new LoginView());
 		this.loginController.appMain();
@@ -85,6 +76,10 @@ public class MainController {
 		this.index = index;
 		this.flag = flag;
 
+		System.out.println(flag);
+		
+		if(this.flag == 2)
+			return;
 		
 		dao = new SayingDAO();
 		datas = dao.getOneofSaying(index, flag);
@@ -100,9 +95,6 @@ public class MainController {
 		this.id = id;
 		this.pwd = pwd;
 		
-//		dao = new SayingDAO();
-//		datas = dao.getSayingRegister();
-		
 		view.dispose();
 		main = new MainController(new MainView(id, pwd, 0)); // 프레임 오픈
 		main.appMain();
@@ -112,8 +104,6 @@ public class MainController {
 		this.id = id;
 		this.pwd = pwd;
 		
-//		dao = new SayingDAO();
-//		datas = dao.getSayingInquiry();
 		
 		view.dispose();
 		main = new MainController(new MainView(id, pwd, 1));
@@ -122,8 +112,6 @@ public class MainController {
 
 	public void userRankingOrder(String id, String pwd) {
 		
-//		dao = new SayingDAO();
-//		datas = dao.getUserRanking();
 		
 		this.id = id;
 		this.pwd = pwd;

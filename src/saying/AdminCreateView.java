@@ -20,7 +20,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 public class AdminCreateView extends JFrame {
-	private SayingDAO dao;
 	private LoginView loginView;
 	protected String id;
 	protected String pwd;

@@ -21,8 +21,8 @@ public class MainView extends JFrame {
 
 	private LoginView loginscreen;
 	private SayingDAO dao;
-	private int flag = 0;
-
+	
+	protected int flag = 0;
 	protected JScrollPane scrollPane;
 	protected JButton registerOrder;
 	protected JButton inquiryOrder;
@@ -133,7 +133,7 @@ public class MainView extends JFrame {
 		}
 
 	}
-
+	
 	private void createBtn(JButton btn) {
 		// TODO Auto-generated method stub
 

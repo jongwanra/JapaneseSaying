@@ -24,7 +24,6 @@ import javax.swing.border.TitledBorder;
 //login screen
 public class LoginView extends JFrame {
 	private Font font;
-	private SayingDAO dao;
 	
 	MainView mainUI;
 	AdminCreateView adminUI;
@@ -107,6 +106,7 @@ public class LoginView extends JFrame {
 		input.add(userLabel);
 
 		userName = new JTextField("", 23);
+		userName.setBackground(color);
 		userName.setFont(font);
 		userName.setBorder(null);
 		input.add(userName);
@@ -116,6 +116,7 @@ public class LoginView extends JFrame {
 		input.add(passLabel);
 
 		password = new JPasswordField("", 13);
+		password.setBackground(color);
 		password.setBorder(null);
 		input.add(password);
 

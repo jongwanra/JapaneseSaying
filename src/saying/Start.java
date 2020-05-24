@@ -8,5 +8,6 @@ public class Start {
 		Start start = new Start();  
 		start.loginController = new LoginController(new LoginView()); // Open Frame
 		start.loginController.appMain();
+		
 	}
 }

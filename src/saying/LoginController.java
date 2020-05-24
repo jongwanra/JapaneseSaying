@@ -15,83 +15,71 @@ public class LoginController {
 	private MainController mainController;
 	private SayingDAO dao;
 	private String[] datas;
-	
+
 	protected int sayingCnt;
-	
+
 	public LoginController(LoginView view) {
 		this.view = view;
 	}
-	
+
 	public void appMain() {
 		view.addButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Object obj = e.getSource();
-				
-				 if (obj == view.btnInit) {
-					System.out.println("btnInit!!");
+
+				if (obj == view.btnInit)
 					init();
-				}else if (obj == view.btnLogin) {
-					System.out.println("btnLogin!!");
+				else if (obj == view.btnLogin)
 					login();
-					
-				}else if (obj == view.btnSignUp) {
-					System.out.println("btnSignUp!!");
+				else if (obj == view.btnSignUp)
 					signUp();
-				}
-				 
-				
 			}
 
 		});
 	}
-	
+
 	protected void init() {
 		// TODO Auto-generated method stub
 		view.userName.setText("");
 		view.password.setText("");
-		
+
 	}
-	
+
 	protected void login() {
-		
-		
+
 		String getUserName = view.userName.getText();
 		String getPassword = new String(view.password.getText());
-		
+
 		dao = new SayingDAO();
 		if (dao.loginCheck(getUserName, getPassword)) {
-			 view.dispose(); // close view
+			view.dispose(); // close view
 
 			// administer
 			if (getUserName.equals("admin") && getPassword.equals("admin")) {
-				System.out.println("admin Page!");
 				adminController = new AdminCreateController(new AdminCreateView(getUserName, getPassword));
 				adminController.appMain();
-						
-			} 
+
+			}
 			// user
 			else {
-				//user Cnt
+				// user Cnt
 				dao.loginCount(getUserName, getPassword);
-				mainController = new MainController(new MainView(getUserName, getPassword, 0)); 
+				mainController = new MainController(new MainView(getUserName, getPassword, 0));
 				mainController.appMain();
-				
+
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Faild");
 		}
 
 	}
+
+	//Enter SignUp View
 	protected void signUp() {
-		System.out.println("signUp!!!");
 		view.dispose();
-		
 		signUpController = new SignUpController(new SignUpView());
 		signUpController.appMain();
 	}
-	
 
-	
-	
 }
