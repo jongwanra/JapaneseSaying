@@ -2,7 +2,7 @@
 
 # 日本の名言
 
-한국어 버전 : www.github.com/jongwanra/README.md
+한국어 버전 : https://github.com/jongwanra/JapaneseSaying/blob/master/README.md
 
 <img width="396" alt="LoginView" src="https://user-images.githubusercontent.com/43265235/82762623-03131f80-9e3d-11ea-9756-f303e1771e0b.png">
 
