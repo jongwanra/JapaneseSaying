@@ -2,6 +2,8 @@
 
 # 日本の名言
 
+한국어 버전 : www.github.com/jongwanra/README.md
+
 <img width="396" alt="LoginView" src="https://user-images.githubusercontent.com/43265235/82762623-03131f80-9e3d-11ea-9756-f303e1771e0b.png">
 
 ## 開発きっかけ
@@ -53,9 +55,9 @@
 
 ## 今後の改善点
 
--　コメント機能 
--　管理者画面のCRUDのRead/Update機能 
--　名言検索機能
+- コメント機能 
+- 管理者画面のCRUDのRead/Update機能 
+- 名言検索機能
 
 <img width="399" alt="AdminView" src="https://user-images.githubusercontent.com/43265235/82763529-5c7e4d00-9e43-11ea-991a-44b88cb5e924.png">
 
