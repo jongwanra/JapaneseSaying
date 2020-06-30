@@ -30,7 +30,7 @@ public class AdminCreateView extends JFrame {
 	protected JTextArea koreanArea;
 
 	protected JButton createBtn;
-	protected JButton readBtn;
+	protected JButton loginTimeBtn;
 	protected JButton updateBtn;
 	protected JButton deleteBtn;
 	protected JButton addBtn;
@@ -63,13 +63,13 @@ public class AdminCreateView extends JFrame {
 		imagePlacePanel(imagePanel);
 
 		createBtn = new JButton("Create");
-		readBtn = new JButton("Read");
+		loginTimeBtn = new JButton("LoginTime");
 		updateBtn = new JButton("Update");
 		deleteBtn = new JButton("Delete");
 		backBtn = new JButton("Back");
 
 		mainBtnMethod(createBtn);
-		BtnMethod(readBtn);
+		BtnMethod(loginTimeBtn);
 		BtnMethod(updateBtn);
 		BtnMethod(deleteBtn);
 		BtnMethod(backBtn);
@@ -200,7 +200,7 @@ public class AdminCreateView extends JFrame {
 		addBtn.addActionListener(listener);
 		backBtn.addActionListener(listener);
 		createBtn.addActionListener(listener);
-		readBtn.addActionListener(listener);
+		loginTimeBtn.addActionListener(listener);
 		updateBtn.addActionListener(listener);
 		deleteBtn.addActionListener(listener);
 	}

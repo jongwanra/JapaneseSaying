@@ -9,6 +9,7 @@ public class AdminCreateController {
 	private AdminCreateView view;
 	private AdminCreateController controller;
 	private AdminDeleteController deleteController;
+	private AdminLoginTimeController loginTimeController;
 	private SayingModel model;
 	private SayingDAO dao;
 	private LoginController loginController;
@@ -40,9 +41,9 @@ public class AdminCreateController {
 				} else if (obj == view.createBtn) {
 					System.out.println("createBtn");
 					createMethod(view.id, view.pwd);
-				} else if (obj == view.readBtn) {
+				} else if (obj == view.loginTimeBtn) {
 					System.out.println("readBtn");
-					readMethod(view.id, view.pwd);
+					loginTimeMethod(view.id, view.pwd);
 				} else if (obj == view.updateBtn) {
 					System.out.println("updateBtn");
 					updateMethod(view.id, view.pwd);
@@ -76,15 +77,19 @@ public class AdminCreateController {
 		deleteController.appMain();
 	}
 
-	protected void readMethod(String id, String pwd) {
+	protected void loginTimeMethod(String id, String pwd) {
 		this.id = id;
 		this.pwd = pwd;
-		System.out.println("readMethod!!!");
+		
+		view.dispose();
+		loginTimeController = new AdminLoginTimeController(new AdminLoginTimeView(id, pwd));
+		loginTimeController.appMain();
 	}
 
 	protected void updateMethod(String id, String pwd) {
 		this.id = id;
 		this.pwd = pwd;
+		
 		System.out.println("updateMethod!!!");
 		
 

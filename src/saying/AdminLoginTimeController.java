@@ -5,11 +5,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-public class AdminDeleteController {
-	private AdminDeleteView view;
-	private AdminDeleteController controller;
+public class AdminLoginTimeController {
+	private AdminLoginTimeView view;
+	private AdminLoginTimeController controller;
 	private AdminCreateController createController;
-	private AdminLoginTimeController loginTimeController;
+	private AdminDeleteController deleteController;
 	
 	private SayingModel model;
 	private SayingDAO dao;
@@ -22,7 +22,7 @@ public class AdminDeleteController {
 	protected String pwd;
 	protected int flag;
 
-	public AdminDeleteController(AdminDeleteView view) {
+	public AdminLoginTimeController(AdminLoginTimeView view) {
 		this.view = view;
 	}
 
@@ -50,7 +50,7 @@ public class AdminDeleteController {
 					createMethod(view.id, view.pwd);
 				} else if (obj == view.loginTimeBtn) {
 					System.out.println("loginTimeBtn");
-					loginTimeMethod(view.id, view.pwd);
+					readMethod(view.id, view.pwd);
 				} else if (obj == view.updateBtn) {
 					System.out.println("updateBtn");
 					updateMethod(view.id, view.pwd);
@@ -88,7 +88,7 @@ public class AdminDeleteController {
 
 	private void refresh() {
 		view.dispose();
-		controller = new AdminDeleteController(new AdminDeleteView(id, pwd));
+		controller = new AdminLoginTimeController(new AdminLoginTimeView(id, pwd));
 		controller.appMain();
 	}
 
@@ -128,20 +128,14 @@ public class AdminDeleteController {
 		this.pwd = pwd;
 		
 		view.dispose();
-		controller = new AdminDeleteController(new AdminDeleteView(id, pwd));
-		controller.appMain();
+		deleteController = new AdminDeleteController(new AdminDeleteView(id, pwd));
+		deleteController.appMain();
 		
 	}
 
-	protected void loginTimeMethod(String id, String pwd) {
+	protected void readMethod(String id, String pwd) {
 		this.id = id;
 		this.pwd = pwd;
-		
-		view.dispose();
-		loginTimeController = new AdminLoginTimeController(new AdminLoginTimeView(id, pwd));
-		loginTimeController.appMain();
-		
-		
 
 	}
 

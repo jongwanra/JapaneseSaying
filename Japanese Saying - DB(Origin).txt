@@ -1,0 +1,144 @@
+  
+Data Base
+
+//User Information
+create table UserInfo(
+userNum int(11) not null auto_increment,
+userID varchar(15) not null,
+userPwd varchar(15) not null,
+userName varchar(15) not null,
+phoneNum varchar(15) not null,
+primary key(userNum)
+)auto_increment = 1;
+
+//Saying Information
+create table SayingInfo(
+sayingNum int(11) not null auto_increment,
+saying varchar(100) not null,
+korean varchar(100) not null,
+primary key(sayingNum)
+)auto_increment = 1;
+
+//Saying Inquiry Count
+create table SayingCnt(
+sayingNum int(11) not null,
+sayingCnt int(11) not null,
+FOREIGN KEY(sayingNum)REFERENCES SayingInfo (sayingNum)
+);
+
+
+//User Inquiry Count
+create table UserCnt(
+userNum int(11) not null,
+userCnt int(11) not null,
+FOREIGN KEY(userNum)REFERENCES UserInfo (userNum)
+);
+
+create table UserLoginTime(
+userNum int(11) not null auto_increment,
+userLoginTime datetime default now(), 
+FOREIGN KEY(userNum) REFERENCES UserInfo (userNum)
+);
+
+
+
+//Insert UserInformation and UserCnt
+
+insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (1, admin, admin, admin, 01000000000);
+insert into UserCnt (userNum, userCnt) values (1,0);
+
+insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (2, lee, asd, lee, 01000000000);
+insert into UserCnt (userNum, userCnt) values (2,0);
+
+insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (3, park, asd, park, 01000000000);
+insert into UserCnt (userNum, userCnt) values (3,0);
+
+insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (4, jongwan, asd, jongwan, 01000000000);
+insert into UserCnt (userNum, userCnt) values (4,0);
+
+insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (5, gun, asd, gun, 01000000000);
+insert into UserCnt (userNum, userCnt) values (5,0);
+
+insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (6, seo, asd, seo, 01000000000);
+insert into UserCnt (userNum, userCnt) values (6,0);
+
+insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (7, miseon, asd, miseon, 01000000000);
+insert into UserCnt (userNum, userCnt) values (7,0);
+
+insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (8, hojae, asd, hojae, 01000000000);
+insert into UserCnt (userNum, userCnt) values (8,0);
+
+insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (9, yoojin, asd, yoojin, 01000000000);
+insert into UserCnt (userNum, userCnt) values (9,0);
+
+insert into UserInfo (userNum, userID, userPwd, userName, phoneNum) values (10, kim, asd, kim, 01000000000);
+insert into UserCnt (userNum, userCnt) values (10,0);
+
+
+//Insert SayingInformation and SayingfCnt
+
+insert into SayingInfo (sayingNum, saying, korean) values(1,"落ちぶれて袖に涙のかかるとき、人の心の奥ぞ知。","가난해져서 소매가 눈물에 젖을 때 사람의 마음속을 알 수가 있느니라");
+insert into SayingCnt values(1, 0);
+
+insert into SayingInfo (sayingNum, saying, korean) values(2,"時は人を待たず","시간은 인간을 기다리지 않는다.");
+insert into SayingCnt values(2, 0);
+
+insert into SayingInfo (sayingNum, saying, korean) values(3,"勝って兜の緒を締めよ","이기고 투구의 끈을 메어라");
+insert into SayingCnt values(3, 0);
+
+insert into SayingInfo (sayingNum, saying, korean) values(4,"愛はガラスのようなものだ。いいかげんにつかんだり、しっかりつかみすぎたりすると割れる。","사랑은 유리같은 것이다. 어설프게 쥐거나, 너무 꽉 쥐게 되면 깨어진다");
+insert into SayingCnt values(4, 0);
+
+insert into SayingInfo (sayingNum, saying, korean) values(5,"こぼれ落(お)ちる淚(なみだ)はとてもキレイです"," 흘러 떨어지는 눈물은 매우 아름다워요.");
+insert into SayingCnt values(5, 0);
+
+insert into SayingInfo (sayingNum, saying, korean) values(6,"ミルク色の雪が甘く積もり ココロまでも溶かしてく","우유 빛깔 눈이 달콤하게 쌓여 마음까지도 녹여가.  ");
+insert into SayingCnt values(6, 0);
+
+insert into SayingInfo (sayingNum, saying, korean) values(7,"悲しみもキミへの想いなら美しい","슬픔도 그대를 향한 마음이라면 아름답다");
+insert into SayingCnt values(7, 0);
+
+insert into SayingInfo (sayingNum, saying, korean) values(8,"優しい夜も別れの朝も　あなた以上にシビれられない","다정한 밤도 이별의 아침도 그대 이상으로 도취될 수 없어");
+insert into SayingCnt values(8, 0);
+
+insert into SayingInfo (sayingNum, saying, korean) values(9,"ありふれた 一瞬(いっしゅん)が 煌(きら)めくのは 二人(ふたり)だからこそ","평범한 한 순간이 빛나는 것은 두 사람이기 때문이야");
+insert into SayingCnt values(9, 0);
+
+insert into SayingInfo (sayingNum, saying, korean) values(10,"ぐうぜんじゃない うんめいのなかで きみのきせきをしんじてる","우연이 아닌 운명 속에서 당신의 기적을 믿고 있어 ");
+insert into SayingCnt values(10, 0);
+insert into UserLoginTime values(1, now());
+
+
+
+
+
+//Ignore
+select UserInfo.*,UserCnt.* from UserInfo left join UserCnt on UserInfo.userNum = UserCnt.userNum;
+
+select UserInfo.userID,UserCnt.userCnt from UserInfo left join UserCnt on UserInfo.userNum = UserCnt.userNum order by UserCnt.userCnt desc;
+
+select SayingInfo.Saying, SayingCnt.sayingCnt from SayingInfo left join SayingCnt on SayingInfo.sayingNum = SayingCnt.sayingNum order by SayingCnt.sayingCnt desc;
+
+
+select UserInfo.userId, UserLoginTime.userLoginTime 
+from UserLoginTime left join UserInfo 
+ on UserInfo.userNum = UserLoginTime.userNum
+ where UserInfo.userNum not in(1)
+ order by UserLoginTime.userLoginTime desc;
+
+//Saying Ranking
+create table SayingRanking(
+sayingRanking int(11) not null auto_increment,
+sayingNum int(11) not null,
+primary key(sayingRanking),
+FOREIGN KEY (sayingNum) REFERENCES SayingInfo (sayingNum)
+);
+
+
+//User Ranking
+create table UserRanking(
+userRanking int(11) not null auto_increment,
+userNum int(11) not null,
+primary key(userRanking),
+FOREIGN KEY (userNum) REFERENCES UserInfo (userNum)
+);

@@ -65,6 +65,7 @@ public class LoginController {
 			else {
 				// user Cnt
 				dao.loginCount(getUserName, getPassword);
+				dao.loginTime(getUserName, getPassword);
 				mainController = new MainController(new MainView(getUserName, getPassword, 0));
 				mainController.appMain();
 

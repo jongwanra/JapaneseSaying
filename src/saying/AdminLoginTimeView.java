@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
-public class AdminDeleteView extends JFrame {
+public class AdminLoginTimeView extends JFrame {
 	private SayingDAO dao;
 	private LoginView loginView;
 	protected String id;
@@ -50,7 +50,7 @@ public class AdminDeleteView extends JFrame {
 	protected int userCnt;
 	protected int sayingCnt;
 
-	public AdminDeleteView(String id, String pwd) {
+	public AdminLoginTimeView(String id, String pwd) {
 		this.id = id;
 		this.pwd = pwd;
 
@@ -77,16 +77,14 @@ public class AdminDeleteView extends JFrame {
 		backBtn = new JButton("Back");
 
 		BtnMethod(createBtn);
-		BtnMethod(loginTimeBtn);
+		mainBtnMethod(loginTimeBtn);
 		BtnMethod(updateBtn);
-		mainBtnMethod(deleteBtn);
+		BtnMethod(deleteBtn);
 		BtnMethod(backBtn);
 
 		JPanel userPanel = new JPanel();
-		deleteUserPlace(userPanel);
+		userLoginTimePlace(userPanel);
 
-		JPanel sayingPanel = new JPanel();
-		deleteSayingPlace(sayingPanel);
 
 		setSize(400, 600);
 
@@ -96,12 +94,12 @@ public class AdminDeleteView extends JFrame {
 	}
 
 	//User Place
-	private void deleteUserPlace(JPanel panel) {
+	private void userLoginTimePlace(JPanel panel) {
 		dao = new SayingDAO();
-		this.userCnt = dao.SelectUserNum();
+		this.userCnt = dao.SelectLoginTimeNum();
 		
 		userDatas = new String[userCnt];
-		userDatas = dao.getAdminUserRegister();
+		userDatas = dao.getAdminLoginTime();
 		
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 0));
 		panel.setPreferredSize(new Dimension(340, 50 * userCnt));
@@ -117,38 +115,13 @@ public class AdminDeleteView extends JFrame {
 
 		userScrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		userScrollPane.setPreferredSize(new Dimension(400, 230));
+		//userScrollPane.setPreferredSize(new Dimension(400, 230));
+		userScrollPane.setPreferredSize(new Dimension(400, 450));
 		
 		add(userScrollPane);
 
 	}
 	
-	
-	//Saying Place
-	private void deleteSayingPlace(JPanel panel) {
-		
-		dao = new SayingDAO();
-		sayingCnt = dao.SelectSayingNum();
-		sayingDatas = new String[sayingCnt];
-		sayingDatas = dao.getAdminSayingRegister();
-		
-		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 0));
-		panel.setPreferredSize(new Dimension(340, 80 * sayingCnt));
-		panel.setBackground(Color.WHITE);
-
-		sayingBtn = new JButton[sayingCnt];
-		for (int i = 0; i < sayingCnt; i++) {
-			sayingBtn[i] = new JButton("<html>" + sayingDatas[i]+ "</html>");
-			sayingBtn[i].setPreferredSize(new Dimension(350, 80));
-			btnDesign(sayingBtn[i], panel);
-		}
-
-		sayingScrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		sayingScrollPane.setPreferredSize(new Dimension(400, 270));
-		add(sayingScrollPane);
-	}
-
 
 	private void btnDesign(JButton btn, JPanel panel) {
 		btn.setBorderPainted(true);
